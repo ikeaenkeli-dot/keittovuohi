@@ -71,7 +71,8 @@ describe('commands.js', function() {
             Commands.call('/komennot', mocked.msg, ['/komennot'])
                 .then(() => {
                     assert.equal(mocked.internals.sentChatId, mocked.privateId);
-                    assert.notEqual(mocked.internals.sentText.indexOf(strings.commands.blakkis.cmd_list.unformat()), -1);
+                    assert.notEqual(mocked.internals.sentText.indexOf('Komennot yksityisviestissä'), -1);
+                    assert.notEqual(mocked.internals.sentText.indexOf('Komennot ryhmässä'), -1);
                     done();
                 }).catch((err) => done(err));
         });
@@ -81,7 +82,8 @@ describe('commands.js', function() {
             Commands.call('/help', mocked.msg, ['/help'])
                 .then(() => {
                     assert.equal(mocked.internals.sentChatId, mocked.privateId);
-                    assert.notEqual(mocked.internals.sentText.indexOf(strings.commands.blakkis.cmd_list.unformat()), -1);
+                    assert.notEqual(mocked.internals.sentText.indexOf('Komennot yksityisviestissä'), -1);
+                    assert.notEqual(mocked.internals.sentText.indexOf('Komennot ryhmässä'), -1);
                     assert.notEqual(mocked.internals.sentText.indexOf(strings.commands.blakkis.help_text.unformat()), -1);
                     done();
                 }).catch((err) => done(err));

@@ -34,13 +34,13 @@ function statsForDays(context, user, msg, words, days) {
             const sum = res.sum;
             const created = new Date(res.created);
             const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-            const daysBetween = (days) ? parseInt(days) : Math.ceil((new Date().getTime() - created.getTime()) / oneDay);
+            const daysBetween = (days) ? parseInt(days) : Math.max(1, Math.ceil((new Date().getTime() - created.getTime()) / oneDay));
             const grams = sum / 1000.0;
             return str_tilastoja.kulutus.on_select.format({
                 day_count: daysBetween,
-                grams: utils.roundTo(grams, 1),
-                standard_drinks: utils.roundTo(grams / constants.STANDARD_DRINK_GRAMS, 1),
-                avg_standard_drinks: utils.roundTo((grams / daysBetween / constants.STANDARD_DRINK_GRAMS), 1)
+                grams: utils.fiNumber(grams, 1),
+                standard_drinks: utils.fiNumber(grams / constants.STANDARD_DRINK_GRAMS, 1),
+                avg_standard_drinks: utils.fiNumber((grams / daysBetween / constants.STANDARD_DRINK_GRAMS), 1)
             });
         });
 }
@@ -52,13 +52,13 @@ function makeSubMenuStatsFunction(days) {
                 const sum = res.sum;
                 const created = new Date(res.created);
                 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-                const daysBetween = (days) ? parseInt(days) : Math.ceil((new Date().getTime() - created.getTime()) / oneDay);
+                const daysBetween = (days) ? parseInt(days) : Math.max(1, Math.ceil((new Date().getTime() - created.getTime()) / oneDay));
                 const grams = sum / 1000.0;
                 return str_tilastoja.kulutus.prefilled.format({
                     day_count: daysBetween,
-                    grams: utils.roundTo(grams, 1),
-                    standard_drinks: utils.roundTo(grams / constants.STANDARD_DRINK_GRAMS, 1),
-                    avg_standard_drinks: utils.roundTo((grams / daysBetween / constants.STANDARD_DRINK_GRAMS), 1)
+                    grams: utils.fiNumber(grams, 1),
+                    standard_drinks: utils.fiNumber(grams / constants.STANDARD_DRINK_GRAMS, 1),
+                    avg_standard_drinks: utils.fiNumber((grams / daysBetween / constants.STANDARD_DRINK_GRAMS), 1)
                 });
             });
     };

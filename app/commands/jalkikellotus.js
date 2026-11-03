@@ -110,8 +110,8 @@ let command = {
                     const permilles = ebac.permilles;
                     const permilles30Min = ebac.permilles30Min;
                     return context.privateReply(utils.getRandomFromArray(strings.drink_responses) + ' ' + strings.short_permilles_text.format({
-                        permilles: utils.roundTo(permilles, 2),
-                        permilles30Min: utils.roundTo(permilles30Min, 2)
+                        permilles: utils.fiNumber(permilles, 2),
+                        permilles30Min: utils.fiNumber(permilles30Min, 2)
                     }));
                 });
         },

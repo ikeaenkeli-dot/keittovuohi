@@ -29,13 +29,13 @@ const constants = require('../constants.js');
 const strings = require('../strings.js');
 
 function kaljaCommand(context, msg, words, user) {
-    return user.drinkBoozeReturnEBAC(constants.KALJA033, '/kalja033', msg)
+    return user.drinkBoozeReturnEBAC(constants.KALJA033, strings.drink_names.kalja033, msg)
         .then((ebac) => {
             const permilles = ebac.permilles;
             const permilles30Min = ebac.permilles30Min;
             const text = utils.getRandomFromArray(strings.drink_responses) + ' ' + strings.short_permilles_text.format({
-                permilles: utils.roundTo(permilles, 2),
-                permilles30Min: utils.roundTo(permilles30Min, 2)
+                permilles: utils.fiNumber(permilles, 2),
+                permilles30Min: utils.fiNumber(permilles30Min, 2)
             });
             return context.privateReply(text);
         });

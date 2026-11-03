@@ -34,13 +34,7 @@ const log = require('loglevel').getLogger('system');
 const PINNED = ['/start', '/tunnus', '/promillet', '/kuvaaja', '/annokset', '/vesi', '/vedet', '/moro', '/help'];
 
 // Nicer menu texts where the built-in help text doesn't fit the menu
-const OVERRIDES = {
-    '/about': 'Tietoa botista',
-    '/terms': 'Käyttöehdot',
-    '/stats2': 'Kulutustilastot annoksittain, esim. /stats2 7',
-    '/stats': 'Kulutustilastot, esim. /stats 7 = viim. 7 päivää',
-    '/promillet': 'Näytä sinun tai ryhmän promillet'
-};
+const OVERRIDES = {};
 
 function describe(cmd) {
     let text = OVERRIDES[cmd.name] || String(cmd.help || '').split('\n')[0].trim();

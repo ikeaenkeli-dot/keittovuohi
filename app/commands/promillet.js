@@ -73,10 +73,10 @@ function listPermilles(context, msg, words, user) {
             time = time > 0 ? time + 0.5 : time;
             let hours = Math.floor(time);
             const text = strings.long_permilles_text.format({
-                permilles: utils.roundTo(permilles, 2),
-                permilles30Min: utils.roundTo(permilles30Min, 2),
+                permilles: utils.fiNumber(permilles, 2),
+                permilles30Min: utils.fiNumber(permilles30Min, 2),
                 grams: utils.roundTo(grams),
-                standard_drinks: utils.roundTo(grams / constants.STANDARD_DRINK_GRAMS, 2),
+                standard_drinks: utils.fiNumber(grams / constants.STANDARD_DRINK_GRAMS, 2),
                 hours: hours,
                 minutes: ('0' + Math.ceil((time - hours) * 60)).slice(-2),
                 drinkList72h: makeDrinksString(drinks72h)

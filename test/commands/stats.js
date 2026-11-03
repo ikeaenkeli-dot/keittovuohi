@@ -40,7 +40,8 @@ describe('stats.js', function() {
         Commands.call('/stats', mocked.msg, ['/stats'])
             .then(() => {
                 assert.equal(mocked.internals.sentChatId, mocked.msg.chat.id);
-                assert.equal(mocked.internals.sentText.match(/\n/g).length, 7); // Tilastoja\n\nStats...\n\nTop10 tilastot:\n\n1\n2
+                assert.notEqual(mocked.internals.sentText.indexOf('Top 10, juomien määrä'), -1);
+                assert.equal(mocked.internals.sentText.split('\n').filter(l => /^\d+\. /.test(l)).length, 2); // 2 numbered users
                 done();
             })
             .catch((err) => done(err));
@@ -53,7 +54,8 @@ describe('stats.js', function() {
         Commands.call('/stats', mocked.msg, ['/stats'])
             .then(() => {
                 assert.equal(mocked.internals.sentChatId, mocked.msg.chat.id);
-                assert.equal(mocked.internals.sentText.match(/\n/g).length, 6); // Tilastoja\n\nStats...\n\nTop10 tilastot:\n\n
+                assert.notEqual(mocked.internals.sentText.indexOf('Top 10, juomien määrä'), -1);
+                assert.equal(mocked.internals.sentText.split('\n').filter(l => /^\d+\. /.test(l)).length, 0); // no users
                 done();
             })
             .catch((err) => done(err));
@@ -65,7 +67,8 @@ describe('stats.js', function() {
         Commands.call('/stats', mocked.msg, ['/stats'])
             .then(() => {
                 assert.equal(mocked.internals.sentChatId, mocked.msg.from.id);
-                assert.equal(mocked.internals.sentText.match(/\n/g), null); // Tilastoja\n\nStats...\n\nTop10 tilastot:\n\n
+                assert.notEqual(mocked.internals.sentText.indexOf('Omat tilastot'), -1);
+                assert.notEqual(mocked.internals.sentText.indexOf('annosta'), -1);
                 done();
             })
             .catch((err) => done(err));

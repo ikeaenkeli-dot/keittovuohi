@@ -40,8 +40,8 @@ function makeDrinkOption(drink_amount, drink_name) {
                     return str_juo.on_drink.format({
                         drink_response: utils.getRandomFromArray(strings.drink_responses),
                         short_permilles_text: strings.short_permilles_text.format({
-                            permilles: utils.roundTo(permilles, 2),
-                            permilles30Min: utils.roundTo(permilles30Min, 2)
+                            permilles: utils.fiNumber(permilles, 2),
+                            permilles30Min: utils.fiNumber(permilles30Min, 2)
                         })
                     });
                 });
@@ -101,8 +101,8 @@ module.exports = {
                     drinkList1h: makeDrinksListString(last_drinks)
                 }) : '';
                 return str_juo.header.format({
-                    permilles: utils.roundTo(ebac.permilles, 2),
-                    permilles30Min: utils.roundTo(ebac.permilles30Min, 2),
+                    permilles: utils.fiNumber(ebac.permilles, 2),
+                    permilles30Min: utils.fiNumber(ebac.permilles30Min, 2),
                     drink_list: drinks_text
                 });
             });
@@ -188,8 +188,8 @@ module.exports = {
                     return str_juo.on_drink.format({
                         drink_response: utils.getRandomFromArray(strings.drink_responses),
                         short_permilles_text: strings.short_permilles_text.format({
-                            permilles: utils.roundTo(permilles, 2),
-                            permilles30Min: utils.roundTo(permilles30Min, 2)
+                            permilles: utils.fiNumber(permilles, 2),
+                            permilles30Min: utils.fiNumber(permilles30Min, 2)
                         })
                     });
                 });
@@ -275,8 +275,8 @@ module.exports = {
                         const permilles = ebac.permilles;
                         const permilles30Min = ebac.permilles30Min;
                         const short_permilles_text = strings.short_permilles_text.format({
-                            permilles: utils.roundTo(permilles, 2),
-                            permilles30Min: utils.roundTo(permilles30Min, 2)
+                            permilles: utils.fiNumber(permilles, 2),
+                            permilles30Min: utils.fiNumber(permilles30Min, 2)
                         });
                         return str_juo.jalkikellotus.save.on_select.format({
                             drink_response: utils.getRandomFromArray(strings.drink_responses),
@@ -331,8 +331,8 @@ module.exports = {
                         let permilles = ebac.permilles;
                         let permilles30Min = ebac.permilles30Min;
                         return str_juo.kumoa.success.format({
-                            permilles: utils.roundTo(permilles, 2),
-                            permilles30Min: utils.roundTo(permilles30Min, 2)
+                            permilles: utils.fiNumber(permilles, 2),
+                            permilles30Min: utils.fiNumber(permilles30Min, 2)
                         });
                     });
             }
@@ -357,8 +357,8 @@ module.exports = {
                     return str_juo.on_drink.format({
                         drink_response: utils.getRandomFromArray(strings.drink_responses),
                         short_permilles_text: strings.short_permilles_text.format({
-                            permilles: utils.roundTo(permilles, 2),
-                            permilles30Min: utils.roundTo(permilles30Min, 2)
+                            permilles: utils.fiNumber(permilles, 2),
+                            permilles30Min: utils.fiNumber(permilles30Min, 2)
                         })
                     });
                 });
@@ -383,8 +383,8 @@ module.exports = {
                     return str_juo.on_drink.format({
                         drink_response: utils.getRandomFromArray(strings.drink_responses),
                         short_permilles_text: strings.short_permilles_text.format({
-                            permilles: utils.roundTo(permilles, 2),
-                            permilles30Min: utils.roundTo(permilles30Min, 2)
+                            permilles: utils.fiNumber(permilles, 2),
+                            permilles30Min: utils.fiNumber(permilles30Min, 2)
                         })
                     });
                 });

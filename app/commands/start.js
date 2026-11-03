@@ -77,8 +77,8 @@ const start = {
                 .then((res) => {
                     const ebac = res.ebac;
                     return str_start.header_user.format({
-                        permilles: utils.roundTo(ebac.permilles, 2),
-                        permilles30Min: utils.roundTo(ebac.permilles30Min, 2)
+                        permilles: utils.fiNumber(ebac.permilles, 2),
+                        permilles30Min: utils.fiNumber(ebac.permilles30Min, 2)
                     });
                 });
         } else {

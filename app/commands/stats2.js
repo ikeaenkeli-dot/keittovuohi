@@ -37,13 +37,13 @@ function printStats(context, msg, words, user) {
                 const sum = res.sum;
                 const created = new Date(res.created);
                 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-                const daysBetween = (words[1] && parseInt(words[1])) ? parseInt(words[1]) : Math.round((new Date().getTime() - created.getTime()) / oneDay);
+                const daysBetween = (words[1] && parseInt(words[1])) ? parseInt(words[1]) : Math.max(1, Math.ceil((new Date().getTime() - created.getTime()) / oneDay));
                 const grams = sum / 1000.0;
                 return context.privateReply(strings.commands.stats2.private.format({
                     day_count: daysBetween,
-                    grams: utils.roundTo(grams, 1),
-                    standard_drinks: utils.roundTo(grams / STANDARD_DRINK_GRAMS, 1),
-                    avg_standard_drinks: utils.roundTo((grams / daysBetween / STANDARD_DRINK_GRAMS), 1)
+                    grams: utils.fiNumber(grams, 1),
+                    standard_drinks: utils.fiNumber(grams / STANDARD_DRINK_GRAMS, 1),
+                    avg_standard_drinks: utils.fiNumber((grams / daysBetween / STANDARD_DRINK_GRAMS), 1)
                 }));
             });
     } else {
@@ -51,17 +51,17 @@ function printStats(context, msg, words, user) {
         return stats.getGroupAlcoholSumStats(group, hours)
             .then((res) => {
                 const top10Stats = res.top10UserStats;
-                const top10text = top10Stats.map((stats) => utils.decrypt(stats.nick) + ' - ' + alcomath.toStandardDrinks(stats.sum / 1000.0, 0)).join('\n');
+                const top10text = top10Stats.map((stats, i) => (i + 1) + '. ' + utils.decrypt(stats.nick) + ': ' + alcomath.toStandardDrinks(stats.sum / 1000.0, 0)).join('\n');
                 const groupDrinkSum = res.groupDrinkSum;
                 const firstDrinkCreated = new Date(groupDrinkSum.created);
                 const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-                const daysBetween = (words[1] && parseInt(words[1])) ? parseInt(words[1]) : Math.round((new Date().getTime() - firstDrinkCreated.getTime()) / oneDay);
+                const daysBetween = (words[1] && parseInt(words[1])) ? parseInt(words[1]) : Math.max(1, Math.ceil((new Date().getTime() - firstDrinkCreated.getTime()) / oneDay));
                 const grams = groupDrinkSum.sum / 1000.0;
                 return context.chatReply(strings.commands.stats2.group.format({
                     day_count: daysBetween,
-                    grams: utils.roundTo(grams, 1),
-                    standard_drinks: utils.roundTo(grams / STANDARD_DRINK_GRAMS, 1),
-                    avg_standard_drinks: utils.roundTo((grams / daysBetween / STANDARD_DRINK_GRAMS), 1),
+                    grams: utils.fiNumber(grams, 1),
+                    standard_drinks: utils.fiNumber(grams / STANDARD_DRINK_GRAMS, 1),
+                    avg_standard_drinks: utils.fiNumber((grams / daysBetween / STANDARD_DRINK_GRAMS), 1),
                     global_drinks_std: alcomath.toStandardDrinks(res.drinkSum / 1000.0, 0),
                     top10List: top10text
                 }));

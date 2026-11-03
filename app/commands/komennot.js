@@ -24,16 +24,23 @@
 
 const Commands = require('../lib/commands.js');
 const strings = require('../strings.js');
+const utils = require('../lib/utils.js');
+const commandMenu = require('../lib/command-menu.js');
+
+// Same command lists and descriptions as Telegram's "/" menu
+function commandList() {
+    const menus = commandMenu.buildMenus();
+    const lines = (list) => list.map((c) => '/' + c.command + ' - ' + c.description).join('\n');
+    return strings.commands.blakkis.cmd_list.format({
+        cmd_list: utils.escapeMarkdown(lines(menus.private)),
+        group_cmd_list: utils.escapeMarkdown(lines(menus.groups))
+    });
+}
+
 
 function cmdListCommand(context, msg, words) {
-    const cmdListStr = Object.values(Commands.__cmds__)
-        .filter(cmd => cmd.privilege !== Commands.PRIVILEGE_ADMIN)
-        .map(cmd => cmd.help)
-        .join('\n');
-    const cmdStr = strings.commands.blakkis.cmd_list.format({
-        cmd_list: cmdListStr
-    });
-    return msg.sendPrivateMessage(cmdStr);
+    const cmdStr = commandList();
+    return context.privateReply(cmdStr);
 }
 
 Commands.register(

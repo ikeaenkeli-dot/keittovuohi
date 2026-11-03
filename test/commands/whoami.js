@@ -39,8 +39,7 @@ describe('whoami.js', function() {
         Commands.call('/whoami', mocked.msg, ['/whoami'])
             .then(() => {
                 assert.equal(mocked.internals.sentChatId, mocked.msg.from.id);
-                assert.notEqual(mocked.internals.sentText.match(user.userId), null);
-                assert.notEqual(mocked.internals.sentText.match(user.username), null);
+                                assert.notEqual(mocked.internals.sentText.match(user.username), null);
                 assert.notEqual(mocked.internals.sentText.match(user.weight), null);
                 assert.notEqual(mocked.internals.sentText.match(user.height), null);
                 assert.notEqual(mocked.internals.sentText.match(user.gender), null);

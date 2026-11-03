@@ -53,13 +53,12 @@ strings.emoji = {
 
 strings.drink_responses = [
     'Bäää.', 'Uuteen nousuun.', 'Muista juoda vettä!', 'Aamu alkaa A:lla.',
-    'Muista juoda vettä!', 'Juo viinaa, viina on hyvää.', 'Meno on meno.',
-    'Lörs lärä, viinaa!', 'Muista juoda vettä!', 'Bäätöntä menoa!',
-    'Loers laerae, booze!', 'Remember to drink water!', 'To the new rise.',
-    'Go is go.', 'Morning begins with A', 'Drink booze, booze is good.'
+    'Muista juoda vettä!', 'Meno on meno.', 'Kippis!',
+    'Lörs lärä!', 'Muista juoda vettä!', 'Bäätöntä menoa!',
+    'Muista välillä vesilasi, /vesi.', 'Skål!'
 ];
-strings.short_permilles_text = '*Nyt:* {permilles}‰ - *30min:* {permilles30Min}‰';
-strings.long_permilles_text = '*Nyt:* {permilles}‰ - *30min:* {permilles30Min}‰.\nVeressäsi on {grams} grammaa alkoholia, joka vastaa {standard_drinks} annosta. Olet selvinpäin {hours}h {minutes}min päästä.\n\nViimeisen kolmen päivän tapahtumat:\n{drinkList72h}';
+strings.short_permilles_text = '\n*Nyt:* {permilles} ‰ | *30 min päästä:* {permilles30Min} ‰';
+strings.long_permilles_text = '*Nyt:* {permilles} ‰ | *30 min päästä:* {permilles30Min} ‰\n(Juuri juotu alkoholi imeytyy noin puolessa tunnissa, siksi lukema voi vielä nousta.)\n\nElimistössä on {grams} g alkoholia eli {standard_drinks} annosta. Olet arviolta selvinpäin {hours} h {minutes} min päästä.\n\n*Viimeisen kolmen päivän juomat:*\n{drinkList72h}';
 strings.gender = {
     'male': 'Mies',
     'female': 'Nainen',
@@ -81,6 +80,10 @@ strings.water_responses = [
 strings.yes = 'Kyllä';
 strings.no = 'Ei';
 strings.no_1st = 'En';
+strings.drink_names = {
+    kalja05: '🍺 Olut 0,5 l',
+    kalja033: '🍺 Olut 0,33 l'
+};
 strings.commands = {
     /* System messages */
     blakkis: {
@@ -89,7 +92,7 @@ strings.commands = {
         unauthorized: 'Ei käyttöoikeutta.',
         user404: 'Rekisteröidy ensiksi käyttämällä komentoa /tunnus.',
         help_text: 'Keittovuohi auttaa sinua ja ystäviäsi seuraamaan rippauksesi (lue: promillejesi) tasoa. Aloita komennolla /start tai seuraa näitä ohjeita.\n\nLuo ensimmäiseksi tunnus komennolla /tunnus. Tunnuksen luomisen jälkeen voit alkaa kellottamaan juomia sisään komennolla /juoma. Annan sinulle arvioita rippauksesta komennolla /promillet. Minut voi myös lisätä ryhmään, jolloin kerron /promillet-komennolla kaikkien ryhmässä olevien rippitasot. Jokaisen ryhmäläisen täytyy kuitenkin sanoa ryhmässä /moro, jotta he pääsevät rippilistaukseen mukaan.',
-        cmd_list: 'Komennot\n\n{cmd_list}',
+        cmd_list: '*Komennot yksityisviestissä:*\n{cmd_list}\n\n*Komennot ryhmässä:*\n{group_cmd_list}',
         use_only_in_private: 'Käytä komentoa vain minun kanssa privaviestinä!',
         use_only_in_chats: 'Käytä komentoa vain chateissa!',
         command_not_found: 'Mitä? Jos kaipaat apua käyttämiseen, kirjoita /help',
@@ -101,7 +104,7 @@ strings.commands = {
 
     /* /about */
     about: {
-        cmd_description: '/about - About the bot',
+        cmd_description: '/about - tietoa botista',
         text: 'Keittovuohi on BläkkisVuohi-bottiin (Joonas Ulmanen, @ultsi) perustuva Telegram-botti. Se on avointa lähdekoodia ja lisensoitu GPLv3-lisenssillä. Lähdekoodi: https://github.com/ikeaenkeli-dot/keittovuohi. Käyttöehdot ja tietosuojaseloste löytyvät komennolla /terms'
     },
 
@@ -320,16 +323,16 @@ strings.commands = {
     },
 
     help: {
-        cmd_description: '/help - tulosta ohje'
+        cmd_description: '/help - ohjeet ja kaikki komennot'
     },
 
     komennot: {
-        cmd_description: '/komennot - listaa kaikki botin komennot'
+        cmd_description: '/komennot - lista kaikista komennoista'
     },
 
     /* jalkikellotus -strings */
     jalkikellotus: {
-        cmd_description: '/jalkikellotus - Kellota unohtuneet juomat mukaan tilastoihin',
+        cmd_description: '/jalkikellotus - lisää unohtuneet juomat jälkikäteen',
         start: 'Kuinka pitkältä aikaväliltä haluat syöttää unohtuneita juomia? Syötä aikaväli tunneissa. \n\nEsimerkiksi kaksi ja puoli tuntia: 2.5 \nYksi tunti ja 15 minuuttia: 1.25.',
         hours_error: 'Tunnit väärin. Mahdolliset arvot välillä 0-24.',
         input_drinks_start: 'Kirjoita juomia seuraavassa muodossa: \nSenttilitrat Tilavuusprosentti. \nEsimerkiksi: 33 4.7. \n\nErota eri juomat joko rivinvaihdolla, tai kirjoita useampi viesti. Lopeta ja tallenna juomat kirjoittamalla stop.',
@@ -342,7 +345,7 @@ strings.commands = {
 
     /* /juoma */
     juoma: {
-        cmd_description: '/juoma - lisää yksi juoma tilastoihin',
+        cmd_description: '/juoma - kirjaa juoma listasta valitsemalla',
         start: 'Valitse juoman kategoria',
         start_error: 'Virhe! Valitse yksi kategorioista',
         to_start: 'Alkuun',
@@ -358,24 +361,24 @@ strings.commands = {
 
     /* /kalja033 */
     kalja033: {
-        cmd_description: '/kalja033 - pikanäppäin yhdelle kappaleelle olutta. Ammattilaiskäyttöön.'
+        cmd_description: '/kalja033 - kirjaa 0,33 l olut (4,7 %)'
     },
 
     /* /kalja05 */
     kalja05: {
-        cmd_description: '/kalja05 - pikanäppäin yhdelle kappaleelle 0.5l olutta. Ammattilaiskäyttöön.'
+        cmd_description: '/kalja05 - kirjaa 0,5 l olut (4,7 %)'
     },
 
     /* /kuvaaja */
     kuvaaja: {
-        cmd_description: '/kuvaaja - Näyttää ryhmän 24h tapahtumat kuvaajana.',
+        cmd_description: '/kuvaaja - promillekäyrä viimeiseltä vuorokaudelta ja ennuste',
         graph_title: 'Promillekuvaaja feat. {chat_title}',
         img_failed: 'Kuvan muodostus epäonnistui!'
     },
 
     /* /laatta */
     laatta: {
-        cmd_description: '/laatta - Poista viimeksi merkattu juoma tilastoista.',
+        cmd_description: '/laatta - poista viimeksi kirjattu juoma',
         start_text: 'Olet laattaamassa viimeksi juodun juomasi. Oletko varma?',
         start_answer_yes: 'Kyllä',
         start_answer_no: 'En',
@@ -386,21 +389,21 @@ strings.commands = {
 
     /* /moro */
     moro: {
-        cmd_description: '/moro - Lisää sinut ryhmään mukaan.',
+        cmd_description: '/moro - liity ryhmän listalle',
         join_text: 'Rippaa rauhassa kera {chat_title} -kavereiden.',
         join_text_private: '✅ Liityit ryhmään *{chat_title}*. Promillesi ja juomasi näkyvät nyt ryhmän listoissa.\n\nPääset pois kirjoittamalla ryhmään /poistu.'
     },
 
     /* /poistu */
     poistu: {
-        cmd_description: '/poistu - Poistu ryhmästä.',
+        cmd_description: '/poistu - poistu ryhmän listalta',
         leave_text: 'Ei enää rippausta kera {chat_title} -kavereiden.',
         leave_text_private: '👋 Poistuit ryhmän *{chat_title}* listalta. Pääset takaisin kirjoittamalla ryhmään /moro.'
     },
 
     /* /promillet */
     promillet: {
-        cmd_description: '/promillet - näytä sinun tai ryhmän promillet. Yksityisviestinä käytettynä listaa myös viimeisen 3pv tapahtumat.',
+        cmd_description: '/promillet - omat tai ryhmän promillet',
         text_group: '📊 {chat_title}: promillet\n\n‰ = arvio juuri nyt\n12h / 24h = annoksia juotu viimeisen 12 / 24 tunnin aikana\n\n{list}',
         text_group_list_item: '{rank}. {username}: {permilles} ‰ | 12h {drinks12h} | 24h {drinks24h}',
         text_group_empty: '📊 {chat_title}: kenelläkään ei ole juuri nyt promilleja.'
@@ -408,27 +411,27 @@ strings.commands = {
 
     /* /stats */
     stats: {
-        cmd_description: '/stats - listaa ryhmän tai sinun kulutustilastoja. Lisäämällä numeron komennon perään voit valita, kuinka monelta päivältä taaksepäin haluat tilastot',
-        private: 'Olet {day_count} päivän aikana tuhonnut {grams} grammaa alkoholia, joka vastaa {standard_drinks} annosta. Keskimäärin olet juonut {avg_standard_drinks} annosta per päivä.',
-        group: 'Tilastoja:\n\nRyhmän jäsenet ovat {day_count} päivän aikana tuhonneet {grams} grammaa alkoholia, joka vastaa {standard_drinks} annosta. Keskimäärin on juotu {avg_standard_drinks} annosta per päivä. Lisäksi kaikki käyttäjät globaalisti ovat yhteensä tilastoineet {global_drinks_count} juomaa. Hienosti.\n\nTop10 tilastot *juomina*:\n\n{top10List}'
+        cmd_description: '/stats - kulutustilastot ja juomien määrä, esim. /stats 7 = viimeiset 7 päivää',
+        private: '📈 *Omat tilastot, {day_count} pv*\n\nOlet juonut {grams} g alkoholia eli {standard_drinks} annosta, keskimäärin {avg_standard_drinks} annosta päivässä.\n\nEri aikaväli: esim. /stats 7 = viimeiset 7 päivää.',
+        group: '📈 Ryhmän tilastot, {day_count} pv\n\nRyhmän jäsenet ovat juoneet {grams} g alkoholia eli {standard_drinks} annosta, keskimäärin {avg_standard_drinks} annosta päivässä. Botin kaikki käyttäjät ovat kirjanneet yhteensä {global_drinks_count} juomaa.\n\nTop 10, juomien määrä:\n{top10List}'
     },
 
     /* /stats2 */
     stats2: {
-        cmd_description: '/stats - listaa ryhmän tai sinun kulutustilastoja annoksittain. Lisäämällä numeron komennon perään voit valita, kuinka monelta päivältä taaksepäin haluat tilastot',
-        private: 'Olet {day_count} päivän aikana tuhonnut {grams} grammaa alkoholia, joka vastaa {standard_drinks} annosta. Keskimäärin olet juonut {avg_standard_drinks} annosta per päivä.',
-        group: 'Tilastoja:\n\nRyhmän jäsenet ovat {day_count} päivän aikana tuhonneet {grams} grammaa alkoholia, joka vastaa {standard_drinks} annosta. Keskimäärin on juotu {avg_standard_drinks} annosta per päivä. Lisäksi kaikki käyttäjät globaalisti ovat yhteensä tilastoineet {global_drinks_std} annosta. Hienosti.\n\nTop10 tilastot *annoksina*:\n\n{top10List}'
+        cmd_description: '/stats2 - kulutustilastot annoksina, esim. /stats2 7 = viimeiset 7 päivää',
+        private: '📈 *Omat tilastot, {day_count} pv*\n\nOlet juonut {grams} g alkoholia eli {standard_drinks} annosta, keskimäärin {avg_standard_drinks} annosta päivässä.\n\nEri aikaväli: esim. /stats 7 = viimeiset 7 päivää.',
+        group: '📈 Ryhmän tilastot, {day_count} pv\n\nRyhmän jäsenet ovat juoneet {grams} g alkoholia eli {standard_drinks} annosta, keskimäärin {avg_standard_drinks} annosta päivässä. Botin kaikki käyttäjät ovat kirjanneet yhteensä {global_drinks_std} annosta.\n\nTop 10, annokset:\n{top10List}'
     },
 
     /* /terms */
     terms: {
-        cmd_description: '/terms - Terms of Service',
+        cmd_description: '/terms - käyttöehdot',
         reply: '*Käyttöehdot*\n\nKäyttämällä Keittovuohta olet hyväksynyt seuraavat käyttöehdot. Keittovuohen päätarkoitus on arvioida alkoholin määrää kehossa. Keittovuohen toiminta voi muuttua tai pysähtyä milloin vain. Sinun täytyy olla yli 18 vuotta käyttääksesi Keittovuohta. Keittovuohen kehittäjät tai ylläpitäjät eivät ole vastuussa mistään suorasta tai epäsuorasta haitasta, jota palvelun käyttäminen voi aiheuttaa. Keittovuohi on ilmainen käyttää. Ominaisuuksien, kuten promillejen arvioiminen, takia Keittovuohi tallentaa käyttäjistä erinäisiä tietoja ja käyttää näitä hyväksi laskennassa. Sinuun suoraan linkitettävät tiedot salataan ennen tallentamista. Tietoja ei koskaan anneta tai myydä eteenpäin kolmansille osapuolille. Tallennetut tiedot voidaan poistaa pyynnöstä.\n\nKeittovuohen tuottamat arviot ovat arvioita, eikä niihin voi missään tapauksessa täysin luottaa. Noudata lakia, kun käytät alkoholia.\n\nNämä käyttöehdot voivat muuttua milloin vain ilman erillistä huomautusta. Uusimmat käyttöehdot voi aina lukea /terms-komennolla. Nämä käyttöehdot ovat voimassa 10.01.2018 lähtien.',
     },
 
     /* /tunnus */
     tunnus: {
-        cmd_description: '/tunnus - Luo itsellesi uusi tunnus tai muokkaa tunnustasi.',
+        cmd_description: '/tunnus - luo tunnus tai muokkaa tietojasi',
         start: 'Tervetuloa tunnuksen luomiseen tai päivittämiseen! Kysyn neljä asiaa: paino, pituus, sukupuoli ja käyttöehtojen hyväksyntä. Vastaa jokaiseen omalla viestillään.\n\n*Vaihe 1/4: Paino*\nKirjoita painosi kiloina pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 75\n❌ Väärin: 75kg, 75,5\n\nSallittu väli: 20–250',
         start_error: 'Painoa ei hyväksytty. Kirjoita pelkkä kokonaisluku väliltä 20–250, esimerkiksi 75 (ei 75kg tai 75,5).',
         height: 'Paino tallennettu.\n\n*Vaihe 2/4: Pituus*\nKirjoita pituutesi senttimetreinä pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 180\n❌ Väärin: 180cm, 1.80\n\nSallittu väli: 120–240',
@@ -447,7 +450,7 @@ strings.commands = {
 
     /* /whoami */
     whoami: {
-        cmd_description: '/whoami - tulosta omat tietosi.',
-        reply: 'Käyttäjä {username}\nID: {user_id}\nPaino: {weight}kg\nPituus: {height}cm\nSukupuoli: {gender}\nKäyttäjä luotu: {created}'
+        cmd_description: '/whoami - näytä omat tietosi',
+        reply: '*Omat tietosi*\n\nNimimerkki: {username}\nPaino: {weight} kg\nPituus: {height} cm\nSukupuoli: {gender}\nTunnus luotu: {created}\n\nMuokkaa tietoja: /start → Asetukset tai /tunnus'
     }
 };

@@ -29,6 +29,7 @@ require('../../app/commands/kalja05.js');
 const assert = require('assert');
 const blakkistest = require('../blakkistest.js');
 const Commands = require('../../app/lib/commands.js');
+const strings = require('../../app/strings.js');
 
 describe('kalja05.js', function() {
     beforeEach(blakkistest.resetDbWithTestUsersAndGroupsAndDrinks);
@@ -40,13 +41,13 @@ describe('kalja05.js', function() {
         user.getBooze()
             .then((rows) => {
                 assert.equal(rows.length, 2);
-                assert(!rows.find(x => x.description === '/kalja05'));
+                assert(!rows.find(x => x.description === strings.drink_names.kalja05));
                 return Commands.call('/kalja05', mocked.msg, ['/kalja05']);
             })
             .then(() => user.getBooze())
             .then((rows) => {
                 assert.equal(rows.length, 3);
-                assert(rows.find(x => x.description === '/kalja05'));
+                assert(rows.find(x => x.description === strings.drink_names.kalja05));
                 assert.notEqual(mocked.internals.sentText.match('‰'), null);
                 done();
             })

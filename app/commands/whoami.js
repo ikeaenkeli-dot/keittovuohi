@@ -33,7 +33,7 @@ function whoAmI(context, msg, words, user) {
         weight: user.weight,
         height: user.height,
         gender: user.gender,
-        created: user.created.toString()
+        created: user.created.toLocaleDateString('fi-FI', { timeZone: 'Europe/Helsinki' })
     }));
 }
 
