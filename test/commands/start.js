@@ -162,7 +162,7 @@ describe('start.js', function() {
                 return Commands.call('', mocked.msg, '');
             })
             .then(() => {
-                assert.notEqual(mocked.internals.editText.indexOf('Bäää - Bläkkisvuohi'), -1);
+                assert.notEqual(mocked.internals.editText.indexOf('Bäää - Keittovuohi'), -1);
                 mocked.msg.data = '/start ' + strings.commands.blakkis.back;
                 mocked.msg.addMessageObj();
                 done();
