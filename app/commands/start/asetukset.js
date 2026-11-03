@@ -96,7 +96,7 @@ module.exports = {
                 _userRequired: true,
                 _onSelect: (context, user, msg, words) => {
                     context.setInlineState(context.state.parent); // go back one level
-                    return user.updateGender('mies')
+                    return user.updateGender(strings.gender_value.male)
                         .then(() => {
                             return str_asetukset.muokkaa.sukupuoli.on_change;
                         });
@@ -107,7 +107,18 @@ module.exports = {
                 _onSelect: (context, user, msg, words) => {
                     context.setInlineState(context.state.parent); // go back one level
 
-                    return user.updateGender('nainen')
+                    return user.updateGender(strings.gender_value.female)
+                        .then(() => {
+                            return str_asetukset.muokkaa.sukupuoli.on_change;
+                        });
+                }
+            },
+            [strings.gender.other]: {
+                _userRequired: true,
+                _onSelect: (context, user, msg, words) => {
+                    context.setInlineState(context.state.parent); // go back one level
+
+                    return user.updateGender(strings.gender_value.other)
                         .then(() => {
                             return str_asetukset.muokkaa.sukupuoli.on_change;
                         });

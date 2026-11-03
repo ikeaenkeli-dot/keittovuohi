@@ -72,20 +72,21 @@ let command = {
     },
     gender: {
         startMessage: message.PrivateKeyboardMessage(strings.commands.tunnus.gender, [
-            [strings.gender.male, strings.gender.female]
+            [strings.gender.male, strings.gender.female],
+            [strings.gender.other]
         ]),
         validateInput: (context, msg, words) => {
-            let gender = words[0].toLowerCase();
-            return gender === strings.gender.male.toLowerCase() || gender === strings.gender.female.toLowerCase();
+            return utils.parseGender((words && words.join(' ')) || msg.text) !== null;
         },
         onValidInput: (context, msg, words) => {
-            const gender = words[0].toLowerCase();
+            const gender = utils.parseGender((words && words.join(' ')) || msg.text);
             context.storeVariable('gender', gender);
             return Promise.resolve();
         },
         nextPhase: 'terms',
         errorMessage: message.PrivateKeyboardMessage(strings.commands.tunnus.gender_error, [
-            [strings.gender.male, strings.gender.female]
+            [strings.gender.male, strings.gender.female],
+            [strings.gender.other]
         ])
     },
     terms: {

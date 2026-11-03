@@ -85,9 +85,18 @@ let alcomath = module.exports = {};
 alcomath.getWidmarkFactorForUser = (user) => {
     const H = user.height;
     const W = user.weight;
-    return user.gender === 'mies' ?
-        0.31608 - 0.004821 * W + 0.4632 * H :
-        0.31223 - 0.006446 * W + 0.4466 * H;
+    const male = 0.31608 - 0.004821 * W + 0.4632 * H;
+    const female = 0.31223 - 0.006446 * W + 0.4466 * H;
+    // Older accounts made via /start may have "Mies" capitalised
+    const gender = String(user.gender || '').toLowerCase();
+    if (gender === 'mies') {
+        return male;
+    }
+    if (gender === 'nainen') {
+        return female;
+    }
+    // Gender not given: use the average of both formulas
+    return (male + female) / 2;
 };
 
 // TODO: maybe mean+-0.01 based on drinking habits

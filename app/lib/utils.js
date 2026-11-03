@@ -267,6 +267,26 @@ utils.decrypt = function(data) {
     return decrypted;
 };
 
+/*
+    Turn a user's answer ("Mies", "nainen", "En halua kertoa"...) into the
+    value stored in the database. Returns null if the answer isn't recognised.
+*/
+utils.parseGender = function(text) {
+    const strings = require('../strings.js');
+    const t = String(text || '').trim().toLowerCase();
+    const options = {
+        male: [strings.gender.male, strings.gender_value.male, 'm'],
+        female: [strings.gender.female, strings.gender_value.female, 'n'],
+        other: [strings.gender.other, strings.gender_value.other, 'en kerro', 'ei', 'en']
+    };
+    for (const key in options) {
+        if (options[key].some((o) => o.toLowerCase() === t)) {
+            return strings.gender_value[key];
+        }
+    }
+    return null;
+};
+
 utils.groupDrinksByUser = (drinks) => {
     let drinksByUser = {};
     for (let i in drinks) {

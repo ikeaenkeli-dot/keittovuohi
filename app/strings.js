@@ -62,7 +62,14 @@ strings.short_permilles_text = '*Nyt:* {permilles}‰ - *30min:* {permilles30Min
 strings.long_permilles_text = '*Nyt:* {permilles}‰ - *30min:* {permilles30Min}‰.\nVeressäsi on {grams} grammaa alkoholia, joka vastaa {standard_drinks} annosta. Olet selvinpäin {hours}h {minutes}min päästä.\n\nViimeisen kolmen päivän tapahtumat:\n{drinkList72h}';
 strings.gender = {
     'male': 'Mies',
-    'female': 'Nainen'
+    'female': 'Nainen',
+    'other': 'En halua kertoa'
+};
+// Values stored in the database
+strings.gender_value = {
+    'male': 'mies',
+    'female': 'nainen',
+    'other': 'ei kerrottu'
 };
 strings.yes = 'Kyllä';
 strings.no = 'Ei';
@@ -194,7 +201,7 @@ strings.commands = {
                 },
                 sukupuoli: {
                     button_text: strings.emoji.female + strings.emoji.male + ' Muokkaa sukupuolta',
-                    on_select: '*Sukupuoli nyt:* {gender}\n\nValitse uusi biologinen sukupuolesi alta:',
+                    on_select: '*Sukupuoli nyt:* {gender}\n\nValitse alta uusi vaihtoehto. Jos valitset *En halua kertoa*, laskenta käyttää miehen ja naisen keskiarvoa.',
                     on_change: 'Sukupuoli muutettu!'
                 }
             },
@@ -217,9 +224,9 @@ strings.commands = {
             weight_error: 'Painoa ei hyväksytty. Kirjoita pelkkä kokonaisluku väliltä 20–250, esimerkiksi 75 (ei 75kg tai 75,5).',
             height: 'Paino tallennettu.\n\n*Vaihe 2/4: Pituus*\nKirjoita pituutesi senttimetreinä pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 180\n❌ Väärin: 180cm, 1.80\n\nSallittu väli: 120–240',
             height_error: 'Syötä pituus uudelleen. Pituuden täytyy olla kokonaisluku ja ala- ja ylärajat ovat 120cm ja 240cm.',
-            gender: 'Pituus tallennettu.\n\n*Vaihe 3/4: Sukupuoli*\nPromillelaskenta tarvitsee biologisen sukupuolen, koska alkoholi jakautuu kehoon eri tavalla.\n\nValitse alta *Mies* tai *Nainen*.',
-            gender_error: 'Sukupuolta ei hyväksytty. Paina alta *Mies* tai *Nainen*, tai kirjoita pelkkä sana mies tai nainen.',
-            terms: 'Sukupuoli tallennettu.\n\n{terms}\n\n*Vaihe 4/4: Hyväksyntä*\nHyväksytkö käyttöehdot? Valitse alta *Kyllä* tai *En*.',
+            gender: 'Pituus tallennettu.\n\n*Vaihe 3/4: Sukupuoli*\nPromillelaskenta tarvitsee biologisen sukupuolen, koska alkoholi jakautuu kehoon eri tavalla.\n\nValitse alta *Mies*, *Nainen* tai *En halua kertoa*.\n\nJos et halua kertoa, laskenta käyttää miehen ja naisen keskiarvoa, joten arviot ovat hieman epätarkempia.',
+            gender_error: 'Vastausta ei tunnistettu. Paina alta *Mies*, *Nainen* tai *En halua kertoa*, tai kirjoita jokin niistä.',
+            terms: 'Sukupuoli tallennettu.\n\n{terms}\n\n*Vaihe 4/4: Hyväksyntä*\nHyväksytkö käyttöehdot? Valitse alta *Kyllä* tai *Ei*.',
             terms_answer_yes: 'Kyllä',
             terms_answer_no: 'En',
             terms_on_reject: 'Tunnusta ei luotu, koska et hyväksynyt käyttöehtoja. Voit aloittaa alusta milloin tahansa komennolla /tunnus.',
@@ -395,8 +402,8 @@ strings.commands = {
         start_error: 'Painoa ei hyväksytty. Kirjoita pelkkä kokonaisluku väliltä 20–250, esimerkiksi 75 (ei 75kg tai 75,5).',
         height: 'Paino tallennettu.\n\n*Vaihe 2/4: Pituus*\nKirjoita pituutesi senttimetreinä pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 180\n❌ Väärin: 180cm, 1.80\n\nSallittu väli: 120–240',
         height_error: 'Syötä pituus uudelleen. Pituuden täytyy olla kokonaisluku ja ala- ja ylärajat ovat 120cm ja 240cm.',
-        gender: 'Pituus tallennettu.\n\n*Vaihe 3/4: Sukupuoli*\nPromillelaskenta tarvitsee biologisen sukupuolen, koska alkoholi jakautuu kehoon eri tavalla.\n\nPaina alta *Mies* tai *Nainen*. Voit myös kirjoittaa sanan mies tai nainen.',
-        gender_error: 'Sukupuolta ei hyväksytty. Paina alta *Mies* tai *Nainen*, tai kirjoita pelkkä sana mies tai nainen.',
+        gender: 'Pituus tallennettu.\n\n*Vaihe 3/4: Sukupuoli*\nPromillelaskenta tarvitsee biologisen sukupuolen, koska alkoholi jakautuu kehoon eri tavalla.\n\nPaina alta *Mies*, *Nainen* tai *En halua kertoa*. Voit myös kirjoittaa vastauksen itse.\n\nJos et halua kertoa, laskenta käyttää miehen ja naisen keskiarvoa, joten arviot ovat hieman epätarkempia.',
+        gender_error: 'Vastausta ei tunnistettu. Paina alta *Mies*, *Nainen* tai *En halua kertoa*, tai kirjoita jokin niistä.',
         terms: 'Sukupuoli tallennettu.\n\n{terms}\n\n*Vaihe 4/4: Hyväksyntä*\nHyväksytkö käyttöehdot? Paina alta *Kyllä* tai *En*, tai kirjoita kyllä tai en.',
         terms_answer_yes: 'Kyllä',
         terms_answer_no: 'En',

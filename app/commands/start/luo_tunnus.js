@@ -59,13 +59,23 @@ module.exports = {
             return Promise.resolve({
                 text: str_luo_tunnus.gender,
                 keyboard: [
-                    [strings.gender.male, strings.gender.female]
+                    [strings.gender.male, strings.gender.female],
+                    [strings.gender.other]
                 ]
             });
         }
 
         if (!gender) {
-            gender = words[0];
+            gender = utils.parseGender((words && words.join(' ')) || msg.text);
+            if (!gender) {
+                return Promise.resolve({
+                    text: str_luo_tunnus.gender_error,
+                    keyboard: [
+                        [strings.gender.male, strings.gender.female],
+                        [strings.gender.other]
+                    ]
+                });
+            }
             context.storeVariable('gender', gender);
             return Promise.resolve({
                 text: str_luo_tunnus.terms.format({
