@@ -49,8 +49,8 @@ describe('poistu.js', function() {
             })
             .then(() => group.getDrinkSum())
             .then((res) => {
-                assert.equal(mocked.internals.sentChatId, mocked.msg.chat.id);
-                assert.equal(mocked.internals.sentText, strings.commands.moro.join_text.format({
+                assert.equal(mocked.internals.sentChatId, mocked.msg.from.id);
+                assert.equal(mocked.internals.sentText, strings.commands.moro.join_text_private.format({
                     chat_title: mocked.msg.chat.title
                 }));
                 assert.equal(res.sum, 12347 * 2);
@@ -58,8 +58,8 @@ describe('poistu.js', function() {
             })
             .then(() => group.getDrinkSum())
             .then((res) => {
-                assert.equal(mocked.internals.sentChatId, mocked.msg.chat.id);
-                assert.equal(mocked.internals.sentText, strings.commands.poistu.leave_text.format({
+                assert.equal(mocked.internals.sentChatId, mocked.msg.from.id);
+                assert.equal(mocked.internals.sentText, strings.commands.poistu.leave_text_private.format({
                     chat_title: mocked.msg.chat.title
                 }));
                 assert.equal(res.sum, 0);

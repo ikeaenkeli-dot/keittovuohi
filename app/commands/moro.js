@@ -23,14 +23,16 @@
 'use strict';
 const Commands = require('../lib/commands.js');
 const strings = require('../strings.js');
+const quietReply = require('../lib/quiet-reply.js');
 
 function moro(context, msg, words, user) {
     return user.joinGroup(msg.chat.id)
         .then(() => {
             context.end();
-            return context.chatReply(strings.commands.moro.join_text.format({
-                chat_title: msg.chat.title
-            }));
+            const title = msg.chat.title || '';
+            return quietReply(context, msg,
+                strings.commands.moro.join_text_private.format({ chat_title: title }),
+                strings.commands.moro.join_text.format({ chat_title: title }));
         });
 }
 

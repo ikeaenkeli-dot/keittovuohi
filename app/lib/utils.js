@@ -140,7 +140,21 @@ utils.hookNewRelic = function(url, func) {
     });
 };
 
+function createDeleteMessageFunction(msg, bot) {
+    // Only works if the bot is a group admin with "delete messages" right.
+    // Failing is fine, so errors are ignored.
+    return function(chatId, messageId) {
+        if (typeof bot.deleteMessage !== 'function') {
+            return Promise.resolve(false);
+        }
+        return bot.deleteMessage(chatId, messageId)
+            .then(() => true)
+            .catch(() => false);
+    };
+}
+
 utils.attachMethods = function attachMethods(msg, bot) {
+    msg.deleteMessage = createDeleteMessageFunction(msg, bot);
     msg.sendPrivateMessage = createSendPrivateMsgFunction(msg, bot);
     msg.sendChatMessage = createSendChatMsgFunction(msg, bot);
     msg.sendMessage = createSendMsgToFunction(msg, bot);

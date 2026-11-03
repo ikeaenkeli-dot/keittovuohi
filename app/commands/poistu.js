@@ -23,14 +23,16 @@
 'use strict';
 const Commands = require('../lib/commands.js');
 const strings = require('../strings.js');
+const quietReply = require('../lib/quiet-reply.js');
 
 function poistu(context, msg, words, user) {
     return user.leaveGroup(msg.chat.id)
         .then(() => {
             context.end();
-            return context.chatReply(strings.commands.poistu.leave_text.format({
-                chat_title: msg.chat.title
-            }));
+            const title = msg.chat.title || '';
+            return quietReply(context, msg,
+                strings.commands.poistu.leave_text_private.format({ chat_title: title }),
+                strings.commands.poistu.leave_text.format({ chat_title: title }));
         });
 }
 

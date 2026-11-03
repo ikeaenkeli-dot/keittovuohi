@@ -386,13 +386,15 @@ strings.commands = {
     /* /moro */
     moro: {
         cmd_description: '/moro - Lisää sinut ryhmään mukaan.',
-        join_text: 'Rippaa rauhassa kera {chat_title} -kavereiden.'
+        join_text: 'Rippaa rauhassa kera {chat_title} -kavereiden.',
+        join_text_private: '✅ Liityit ryhmään *{chat_title}*. Promillesi ja juomasi näkyvät nyt ryhmän listoissa.\n\nPääset pois kirjoittamalla ryhmään /poistu.'
     },
 
     /* /poistu */
     poistu: {
         cmd_description: '/poistu - Poistu ryhmästä.',
-        leave_text: 'Ei enää rippausta kera {chat_title} -kavereiden.'
+        leave_text: 'Ei enää rippausta kera {chat_title} -kavereiden.',
+        leave_text_private: '👋 Poistuit ryhmän *{chat_title}* listalta. Pääset takaisin kirjoittamalla ryhmään /moro.'
     },
 
     /* /promillet */
