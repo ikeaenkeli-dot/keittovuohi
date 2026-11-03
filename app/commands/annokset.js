@@ -89,15 +89,22 @@ function annokset(context, msg, words, user) {
         let group = new groups.Group(msg.chat.id);
         return group.getStandardDrinksListing(msg.chat.id)
             .then((standardDrinksListing) => {
-                const listText = standardDrinksListing.map(user => strings.commands.annokset.text_group_list_item.format({
+                const str = strings.commands.annokset;
+                if (standardDrinksListing.length === 0) {
+                    return context.chatReply(str.text_group_empty.format({
+                        chat_title: msg.chat.title || ''
+                    }));
+                }
+                const listText = standardDrinksListing.map((user, i) => str.text_group_list_item.format({
+                    rank: i + 1,
                     username: user[0],
-                    standard_drinks: utils.roundTo(user[1], 2),
-                    drinks12h: utils.roundTo(user[2], 2),
-                    drinks24h: utils.roundTo(user[3], 2)
+                    standard_drinks: utils.fiNumber(user[1], 1),
+                    drinks12h: utils.fiNumber(user[2], 1),
+                    drinks24h: utils.fiNumber(user[3], 1)
                 }));
-                const text = strings.commands.annokset.text_group.format({
-                    chat_title: msg.chat.title,
-                    list: listText
+                const text = str.text_group.format({
+                    chat_title: msg.chat.title || '',
+                    list: listText.join('\n')
                 });
                 return context.chatReply(text);
             });

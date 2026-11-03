@@ -197,6 +197,12 @@ utils.escapeMarkdown = function(text) {
     return String(text === undefined || text === null ? '' : text).replace(/([_*`\[])/g, '\\$1');
 };
 
+// Number with fixed decimals and a Finnish decimal comma: 8.217 -> "8,2"
+utils.fiNumber = function(n, decimals) {
+    const num = Number(n) || 0;
+    return num.toFixed(decimals === undefined ? 1 : decimals).replace('.', ',');
+};
+
 utils.roundTo = (n, t) => {
     t = t || 0;
     return Math.round(n * (Math.pow(10, t))) / Math.pow(10, t);

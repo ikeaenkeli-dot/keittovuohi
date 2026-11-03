@@ -41,8 +41,11 @@ describe('annokset.js', function() {
         Commands.call('/annokset', mocked.msg, ['/annokset'])
             .then(() => {
                 assert.equal(mocked.internals.sentChatId, mocked.msg.chat.id);
-                assert.notEqual(mocked.internals.sentText.indexOf(strings.commands.annokset.text_group.unformat()), -1);
-                assert.equal(mocked.internals.sentText.match(/\n/g).length, 3); // 1 header line + 2 breaks + 2 users separated by 1 linebreak
+                const text = mocked.internals.sentText;
+                assert.notEqual(text.indexOf(mocked.msg.chat.title + ': annokset'), -1);
+                const items = text.split('\n').filter(line => /^\d+\. /.test(line));
+                assert.equal(items.length, 2); // one line per user, numbered
+                assert.equal(items[0].indexOf('1. '), 0);
                 done();
             })
             .catch((err) => done(err));
@@ -55,8 +58,9 @@ describe('annokset.js', function() {
         Commands.call('/annokset', mocked.msg, ['/annokset'])
             .then(() => {
                 assert.equal(mocked.internals.sentChatId, mocked.msg.chat.id);
-                assert.notEqual(mocked.internals.sentText.indexOf(strings.commands.annokset.text_group.unformat()), -1);
-                assert.equal(mocked.internals.sentText.match(/\n/g).length, 3); // 1 header line + 2 breaks + 0 users
+                assert.equal(mocked.internals.sentText, strings.commands.annokset.text_group_empty.format({
+                    chat_title: mocked.msg.chat.title
+                }));
                 done();
             })
             .catch((err) => done(err));

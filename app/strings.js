@@ -134,9 +134,10 @@ strings.commands = {
     },
 
     annokset: {
-        cmd_description: '/annokset - kertoo ryhmän kulutetut annokset viimeisen 48h ajalta',
-        text_group: '{chat_title} -käyttäjien rippitaso:\nKäyttäjä...annoksia (yht. 12h/24h)\n\n{list}',
-        text_group_list_item: '{username}... {standard_drinks}kpl ({drinks12h}/{drinks24h})'
+        cmd_description: '/annokset - ryhmän annokset: elimistössä nyt ja juotu 12h/24h aikana',
+        text_group: '🍻 {chat_title}: annokset\n\nnyt = annoksia elimistössä juuri nyt\n12h / 24h = juotu viimeisen 12 / 24 tunnin aikana\n\n{list}',
+        text_group_list_item: '{rank}. {username}: nyt {standard_drinks} | 12h {drinks12h} | 24h {drinks24h}',
+        text_group_empty: '🍻 {chat_title}: kenelläkään ei ole juuri nyt alkoholia elimistössä.'
     },
 
     start: {
@@ -400,8 +401,9 @@ strings.commands = {
     /* /promillet */
     promillet: {
         cmd_description: '/promillet - näytä sinun tai ryhmän promillet. Yksityisviestinä käytettynä listaa myös viimeisen 3pv tapahtumat.',
-        text_group: '{chat_title} -käyttäjien rippitaso:\nKäyttäjä...‰ (annoksia 12h/24h)\n\n{list}',
-        text_group_list_item: '{username}... {permilles} ({drinks12h}/{drinks24h})'
+        text_group: '📊 {chat_title}: promillet\n\n‰ = arvio juuri nyt\n12h / 24h = annoksia juotu viimeisen 12 / 24 tunnin aikana\n\n{list}',
+        text_group_list_item: '{rank}. {username}: {permilles} ‰ | 12h {drinks12h} | 24h {drinks24h}',
+        text_group_empty: '📊 {chat_title}: kenelläkään ei ole juuri nyt promilleja.'
     },
 
     /* /stats */
