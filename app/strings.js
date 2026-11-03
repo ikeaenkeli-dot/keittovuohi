@@ -71,6 +71,13 @@ strings.gender_value = {
     'female': 'nainen',
     'other': 'ei kerrottu'
 };
+strings.water_responses = [
+    'Nesteytys kunnossa!',
+    'Vuohi hyväksyy.',
+    'Aamulla kiität itseäsi.',
+    'Hyvä veto!',
+    'Fiksu valinta.'
+];
 strings.yes = 'Kyllä';
 strings.no = 'Ei';
 strings.no_1st = 'En';
@@ -112,6 +119,20 @@ strings.commands = {
     },
 
     /* /annokset */
+    vesi: {
+        cmd_description: '/vesi - kirjaa lasillinen vettä (ei vaikuta promilleihin)',
+        drink_name: '💧 Vesi',
+        reply: '{response} Vesilasi kirjattu. Tänään (24h) alkoholittomia: {count} kpl.'
+    },
+
+    vedet: {
+        cmd_description: '/vedet - ryhmän alkoholittomat juomat viimeisen 24h ajalta',
+        text_group: '💧 *{chat_title}: alkoholittomat 24h*\n\n{list}\n\nKirjaa vesi yksityisviestillä botille komennolla /vesi tai /start → Juo → Alkoholittomat.',
+        text_group_list_item: '{username}... {count} kpl',
+        text_group_empty: '💧 Kukaan ei ole vielä kirjannut alkoholittomia juomia viimeisen 24h aikana.\n\nKirjaa vesi yksityisviestillä botille komennolla /vesi.',
+        text_private: '💧 Olet kirjannut viimeisen 24h aikana {count} alkoholitonta juomaa.{list}'
+    },
+
     annokset: {
         cmd_description: '/annokset - kertoo ryhmän kulutetut annokset viimeisen 48h ajalta',
         text_group: '{chat_title} -käyttäjien rippitaso:\nKäyttäjä...annoksia (yht. 12h/24h)\n\n{list}',
@@ -146,6 +167,12 @@ strings.commands = {
                 button_text: strings.emoji.shot + ' Shotit',
                 header_title: 'Shotit',
                 on_select: 'Valitse shotti.',
+            },
+            alkoholittomat: {
+                button_text: '🥤 Alkoholittomat',
+                header_title: 'Alkoholittomat',
+                on_select: 'Valitse alkoholiton juoma. Nämä eivät vaikuta promilleihin, mutta näkyvät ryhmän /vedet-listassa.',
+                on_drink: '{response} Tänään (24h) alkoholittomia: {count} kpl.'
             },
             oma: {
                 button_text: strings.emoji.memo + ' Oma juoma',

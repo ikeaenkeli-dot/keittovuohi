@@ -76,6 +76,8 @@ module.exports = function(bot) {
     require('./commands/stats.js');
     require('./commands/stats2.js');
     require('./commands/terms.js');
+    require('./commands/vedet.js');
+    require('./commands/vesi.js');
     require('./commands/tunnus.js');
     require('./commands/whoami.js');
 

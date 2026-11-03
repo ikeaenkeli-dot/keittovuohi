@@ -107,6 +107,12 @@ class User {
             });
     }
 
+    getNonAlcoholicDrinksForHours(hours) {
+        const hoursAgo = utils.getDateMinusHours(hours);
+        return pool.query('select description, created from users_drinks where userId = $1 and alcohol = 0 and created >= $2 order by created asc', [this.userId, hoursAgo])
+            .then((res) => res.rows);
+    }
+
     drinkBoozeReturnEBAC(amount, description) {
         let self = this;
         return self.drinkBooze(amount, description)

@@ -37,8 +37,8 @@ stats.getGlobalStats = function() {
         pool.query('select count(distinct groupid) from users_drinks join users on users.userid=users_drinks.userid join users_in_groups on users_in_groups.userid=users.userid where users_drinks.created >= NOW() - INTERVAL \'14 days\''),
         pool.query('select count(distinct groupid) from users_drinks join users on users.userid=users_drinks.userid join users_in_groups on users_in_groups.userid=users.userid where users_drinks.created >= NOW() - INTERVAL \'7 days\''),
         pool.query('select count(distinct groupid) from users_in_groups'),
-        pool.query('select drinks.userid, nick, count from (select userid, count(*) as count from users_drinks group by userid) as drinks join users on users.userid=drinks.userid order by count desc limit 10'),
-        pool.query('select count(distinct id) from users_drinks')
+        pool.query('select drinks.userid, nick, count from (select userid, count(*) as count from users_drinks where alcohol > 0 group by userid) as drinks join users on users.userid=drinks.userid order by count desc limit 10'),
+        pool.query('select count(distinct id) from users_drinks where alcohol > 0')
     ]).then(
         (res) => {
             return Promise.resolve({
@@ -62,9 +62,9 @@ stats.getGroupStats = function(group, hours) {
     const hoursAgo = utils.getDateMinusHours(hours);
     log.debug('Fetching group stats from database');
     return Promise.all([
-        pool.query('select drinks.userid, nick, count from (select userid, count(*) as count from users_drinks where users_drinks.created >= $2 group by userid) as drinks left outer join users on users.userid=drinks.userid left outer join users_in_groups on users_in_groups.userid=users.userid where users_in_groups.groupid=$1 order by count desc limit 10', [group.groupId, hoursAgo]),
+        pool.query('select drinks.userid, nick, count from (select userid, count(*) as count from users_drinks where users_drinks.created >= $2 and alcohol > 0 group by userid) as drinks left outer join users on users.userid=drinks.userid left outer join users_in_groups on users_in_groups.userid=users.userid where users_in_groups.groupid=$1 order by count desc limit 10', [group.groupId, hoursAgo]),
         pool.query('select sum(alcohol) as sum, min(created) as created from users_in_groups left outer join users_drinks on users_drinks.userid=users_in_groups.userid and users_in_groups.groupid=$1 and users_drinks.created >= $2', [group.groupId, hoursAgo]),
-        pool.query('select count(distinct id) from users_drinks')
+        pool.query('select count(distinct id) from users_drinks where alcohol > 0')
     ]).then((res) => {
         return Promise.resolve({
             top10UserStats: res[0].rows,
@@ -102,9 +102,9 @@ stats.getWappuStats = function(group, hours) {
     const hoursAgo = utils.getDateMinusHours(hours);
     log.debug('Fetching group stats from database');
     return Promise.all([
-        pool.query('select drinks.userid, nick, count from (select userid, count(*) as count from users_drinks where users_drinks.created >= $2 group by userid) as drinks left outer join users on users.userid=drinks.userid left outer join users_in_groups on users_in_groups.userid=users.userid where users_in_groups.groupid=$1 order by count desc limit 10', [group.groupId, hoursAgo]),
-        pool.query('select sum(alcohol) as sum, count(alcohol) as count, min(created) as created from users_in_groups left outer join users_drinks on users_drinks.userid=users_in_groups.userid and users_in_groups.groupid=$1 and users_drinks.created >= $2', [group.groupId, hoursAgo]),
-        pool.query('select count(distinct id) as count, sum(alcohol) as sum from users_drinks where users_drinks.created >= $1', [hoursAgo])
+        pool.query('select drinks.userid, nick, count from (select userid, count(*) as count from users_drinks where users_drinks.created >= $2 and alcohol > 0 group by userid) as drinks left outer join users on users.userid=drinks.userid left outer join users_in_groups on users_in_groups.userid=users.userid where users_in_groups.groupid=$1 order by count desc limit 10', [group.groupId, hoursAgo]),
+        pool.query('select sum(alcohol) as sum, count(nullif(alcohol, 0)) as count, min(created) as created from users_in_groups left outer join users_drinks on users_drinks.userid=users_in_groups.userid and users_in_groups.groupid=$1 and users_drinks.created >= $2', [group.groupId, hoursAgo]),
+        pool.query('select count(distinct id) filter (where alcohol > 0) as count, sum(alcohol) as sum from users_drinks where users_drinks.created >= $1', [hoursAgo])
     ]).then((res) => {
         return Promise.resolve({
             top10UserStats: res[0].rows,

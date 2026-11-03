@@ -48,6 +48,16 @@ Group.prototype.getDrinkSumForXHours = function(hours) {
         .then((res) => Promise.resolve(res.rows[0]));
 };
 
+Group.prototype.getNonAlcoholicCountsByUser = function(hours) {
+    const hoursAgo = utils.getDateMinusHours(hours || 24);
+    return pool.query('select users.userId, users.nick, count(users_drinks.id) as count from users_in_groups join users on users.userId=users_in_groups.userId join users_drinks on users_drinks.userId=users_in_groups.userId and users_drinks.alcohol = 0 and users_drinks.created >= $2 where users_in_groups.groupId=$1 group by users.userId, users.nick order by count desc', [this.groupId, hoursAgo])
+        .then((res) => res.rows.map((row) => ({
+            userid: row.userid,
+            nick: utils.decrypt(row.nick),
+            count: parseInt(row.count, 10)
+        })));
+};
+
 Group.prototype.getDrinkSumsByUser = function(hours) {
     hours = hours ? hours : 24;
 

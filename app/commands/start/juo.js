@@ -49,6 +49,20 @@ function makeDrinkOption(drink_amount, drink_name) {
     };
 }
 
+function makeNonAlcoholicOption(drink_name) {
+    return {
+        _userRequired: true,
+        _onSelect: (context, user, msg, words) => {
+            return user.drinkBooze(0, drink_name)
+                .then(() => user.getNonAlcoholicDrinksForHours(24))
+                .then((drinks) => str_juo.alkoholittomat.on_drink.format({
+                    response: utils.getRandomFromArray(strings.water_responses),
+                    count: drinks.length
+                }));
+        }
+    };
+}
+
 function makeDrinksListString(drinks) {
     let list = [];
     for (var i in drinks) {
@@ -123,6 +137,18 @@ module.exports = {
         [strings.emoji.shot + '4cl 38%']: makeDrinkOption(constants.calcAlcoholMilligrams(0.38, 0.04), strings.emoji.shot + '4cl 38%'),
         [strings.emoji.shot + '4cl 40%']: makeDrinkOption(constants.calcAlcoholMilligrams(0.40, 0.04), strings.emoji.shot + '4cl 40%'),
         [strings.emoji.shot + '4cl 60%']: makeDrinkOption(constants.calcAlcoholMilligrams(0.60, 0.04), strings.emoji.shot + '4cl 60%'),
+    },
+    [str_juo.alkoholittomat.button_text]: {
+        _text: str_juo.alkoholittomat.on_select,
+        _headerTitle: str_juo.alkoholittomat.header_title,
+        _userRequired: true,
+        ['💧 Vesi 33cl']: makeNonAlcoholicOption('💧 Vesi 33cl'),
+        ['💧 Vesi 50cl']: makeNonAlcoholicOption('💧 Vesi 50cl'),
+        ['🥤 Limsa']: makeNonAlcoholicOption('🥤 Limsa'),
+        ['🍺 Alkoholiton olut']: makeNonAlcoholicOption('🍺 Alkoholiton olut'),
+        ['🍹 Alkoholiton drinkki']: makeNonAlcoholicOption('🍹 Alkoholiton drinkki'),
+        ['⚡ Energiajuoma']: makeNonAlcoholicOption('⚡ Energiajuoma'),
+        ['☕ Kahvi tai tee']: makeNonAlcoholicOption('☕ Kahvi tai tee')
     },
     [str_juo.oma.button_text]: {
         _text: str_juo.oma.on_select.format({

@@ -31,7 +31,7 @@ const settings = require('../settings.js');
 const log = require('loglevel').getLogger('system');
 
 // Shown first, in this order. Everything else follows alphabetically.
-const PINNED = ['/start', '/tunnus', '/promillet', '/kuvaaja', '/annokset', '/moro', '/help'];
+const PINNED = ['/start', '/tunnus', '/promillet', '/kuvaaja', '/annokset', '/vesi', '/vedet', '/moro', '/help'];
 
 // Nicer menu texts where the built-in help text doesn't fit the menu
 const OVERRIDES = {
