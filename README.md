@@ -1,4 +1,4 @@
-# BläkkisVuohi
+# Keittovuohi
 
 Telegram-botti, joka arvioi käyttäjän veren alkoholipitoisuutta (promillet) juotujen annosten perusteella. Ryhmissä botti näyttää kaikkien jäsenten promillet tai annokset (12,0 g alkoholia).
 
