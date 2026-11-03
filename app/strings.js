@@ -127,7 +127,7 @@ strings.commands = {
 
     vedet: {
         cmd_description: '/vedet - ryhmän alkoholittomat juomat viimeisen 24h ajalta',
-        text_group: '💧 *{chat_title}: alkoholittomat 24h*\n\n{list}\n\nKirjaa vesi yksityisviestillä botille komennolla /vesi tai /start → Juo → Alkoholittomat.',
+        text_group: '💧 {chat_title}: alkoholittomat 24h\n\n{list}\n\nKirjaa vesi yksityisviestillä botille komennolla /vesi tai /start → Juo → Alkoholittomat.',
         text_group_list_item: '{username}... {count} kpl',
         text_group_empty: '💧 Kukaan ei ole vielä kirjannut alkoholittomia juomia viimeisen 24h aikana.\n\nKirjaa vesi yksityisviestillä botille komennolla /vesi.',
         text_private: '💧 Olet kirjannut viimeisen 24h aikana {count} alkoholitonta juomaa.{list}'

@@ -62,9 +62,32 @@ function createSendChatMsgFunction(msg, bot) {
     };
 }
 
+/*
+    Telegram rejects a Markdown message if user-provided text (a nickname
+    like Ville_Pitkanen, a group title...) contains an unmatched _ * ` or [.
+    If that happens anyway, send the same text again without formatting
+    instead of failing.
+*/
+function isMarkdownParseError(err, options) {
+    return !!(options && options.parse_mode && err && /can't parse entities/i.test(err.message || ''));
+}
+
+function withoutParseMode(options) {
+    const copy = Object.assign({}, options);
+    delete copy.parse_mode;
+    return copy;
+}
+
 function createSendMsgToFunction(msg, bot) {
     return function(chatId, text, options) {
         return bot.sendMessage(chatId, text, options)
+            .catch((err) => {
+                if (!isMarkdownParseError(err, options)) {
+                    throw err;
+                }
+                log.warn('Markdown parse failed, resending as plain text');
+                return bot.sendMessage(chatId, text, withoutParseMode(options));
+            })
             .then(() => {
                 log.debug('sent ' + text + ' to chat ' + chatId);
                 return Promise.resolve();
@@ -97,6 +120,13 @@ function createSendPhotoFunction(msg, bot) {
 function createEditMessageTextFunction(msg, bot) {
     return function(text, options) {
         return bot.editMessageText(text, options)
+            .catch((err) => {
+                if (!isMarkdownParseError(err, options)) {
+                    throw err;
+                }
+                log.warn('Markdown parse failed, editing as plain text');
+                return bot.editMessageText(text, withoutParseMode(options));
+            })
             .then(() => {
                 log.debug('edited message');
                 return Promise.resolve();
@@ -160,6 +190,11 @@ utils.attachMethods = function attachMethods(msg, bot) {
     msg.sendMessage = createSendMsgToFunction(msg, bot);
     msg.sendPhoto = createSendPhotoFunction(msg, bot);
     msg.editMessageText = createEditMessageTextFunction(msg, bot);
+};
+
+// Escape user-provided text (nicknames, group titles) for Telegram Markdown
+utils.escapeMarkdown = function(text) {
+    return String(text === undefined || text === null ? '' : text).replace(/([_*`\[])/g, '\\$1');
 };
 
 utils.roundTo = (n, t) => {

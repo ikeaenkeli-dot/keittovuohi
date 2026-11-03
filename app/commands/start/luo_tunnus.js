@@ -102,7 +102,7 @@ module.exports = {
                     return users.new(userId, username, weight, gender, height, true)
                         .then((user) => {
                             return str_luo_tunnus.new_user.format({
-                                username: user.username
+                                username: utils.escapeMarkdown(user.username)
                             });
                         });
                 }
