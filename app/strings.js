@@ -74,13 +74,13 @@ strings.commands = {
         announcements: 'Ilmoituksia:\n\n{announcements}',
         unauthorized: 'Ei käyttöoikeutta.',
         user404: 'Rekisteröidy ensiksi käyttämällä komentoa /tunnus.',
-        help_text: 'BläkkisVuohi auttaa sinua ja ystäviäsi seuraamaan rippauksesi (lue: promillejesi) tasoa. Aloita komennolla /start tai seuraa näitä ohjeita.\n\nLuo ensimmäiseksi tunnus komennolla /tunnus. Tunnuksen luomisen jälkeen voit alkaa kellottamaan juomia sisään komennolla /juoma. Annan sinulle arvioita rippauksesta komennolla /promillet. Minut voi myös lisätä ryhmään, jolloin kerron /promillet-komennolla kaikkien ryhmässä olevien rippitasot. Jokaisen ryhmäläisen täytyy kuitenkin sanoa ryhmässä /moro, jotta he pääsevät rippilistaukseen mukaan.',
+        help_text: 'Keittovuohi auttaa sinua ja ystäviäsi seuraamaan rippauksesi (lue: promillejesi) tasoa. Aloita komennolla /start tai seuraa näitä ohjeita.\n\nLuo ensimmäiseksi tunnus komennolla /tunnus. Tunnuksen luomisen jälkeen voit alkaa kellottamaan juomia sisään komennolla /juoma. Annan sinulle arvioita rippauksesta komennolla /promillet. Minut voi myös lisätä ryhmään, jolloin kerron /promillet-komennolla kaikkien ryhmässä olevien rippitasot. Jokaisen ryhmäläisen täytyy kuitenkin sanoa ryhmässä /moro, jotta he pääsevät rippilistaukseen mukaan.',
         cmd_list: 'Komennot\n\n{cmd_list}',
         use_only_in_private: 'Käytä komentoa vain minun kanssa privaviestinä!',
         use_only_in_chats: 'Käytä komentoa vain chateissa!',
         command_not_found: 'Mitä? Jos kaipaat apua käyttämiseen, kirjoita /help',
         command_error: 'Virhe! Komennon käyttöohje: {cmd_help}',
-        error: 'Vakava virhe! Ota yhteyttä @ultsi, niin minut saadaan korjattua.',
+        error: 'Vakava virhe! Ota yhteyttä botin ylläpitäjään, niin minut saadaan korjattua.',
         on_cmd_register: 'Registered command {name}, scope: {scope}, privilege: {privilege}, type: {type}, definition: {definition}',
         back: '« Takaisin'
     },
@@ -88,7 +88,7 @@ strings.commands = {
     /* /about */
     about: {
         cmd_description: '/about - About the bot',
-        text: 'BläkkisVuohi is a bot currently developed and maintained by @ultsi. It\'s completely open source, free and licensed under GPLv3. Source code can be found at https://github.com/ultsi/blakkisvuohi. Terms of Service and Privacy Policy can be found by using the command /terms'
+        text: 'Keittovuohi on BläkkisVuohi-bottiin (Joonas Ulmanen, @ultsi) perustuva Telegram-botti. Se on avointa lähdekoodia ja lisensoitu GPLv3-lisenssillä. Lähdekoodi: https://github.com/ikeaenkeli-dot/keittovuohi. Käyttöehdot ja tietosuojaseloste löytyvät komennolla /terms'
     },
 
     /* /admin_loglevel */
@@ -113,10 +113,10 @@ strings.commands = {
 
     start: {
         on_select: 'Veressäsi on {grams} grammaa alkoholia, joka vastaa {standard_drinks} annosta. Olet selvinpäin {hours}h {minutes}min päästä.{drink_list}',
-        on_select_nonuser: 'BläkkisVuohi auttaa sinua ja ystäviäsi seuraamaan rippauksesi (lue: promillejesi) tasoa. Luo ensimmäiseksi tunnus valitsemalla Luo tunnus. Tunnuksen luomisen jälkeen voit alkaa kellottamaan juomia sisään juomavalikosta. Annan sinulle arvioita rippauksesta promillejen muodossa. Minut voi myös lisätä ryhmään, jolloin kerron /promillet-komennolla kaikkien ryhmässä olevien rippitasot. Jokaisen ryhmäläisen täytyy kuitenkin sanoa ryhmässä /moro, jotta he pääsevät rippilistaukseen mukaan.',
+        on_select_nonuser: 'Keittovuohi auttaa sinua ja ystäviäsi seuraamaan rippauksesi (lue: promillejesi) tasoa. Luo ensimmäiseksi tunnus valitsemalla Luo tunnus. Tunnuksen luomisen jälkeen voit alkaa kellottamaan juomia sisään juomavalikosta. Annan sinulle arvioita rippauksesta promillejen muodossa. Minut voi myös lisätä ryhmään, jolloin kerron /promillet-komennolla kaikkien ryhmässä olevien rippitasot. Jokaisen ryhmäläisen täytyy kuitenkin sanoa ryhmässä /moro, jotta he pääsevät rippilistaukseen mukaan.',
         header_user: strings.emoji.goat + ' *Bäää - {title}* ' + strings.emoji.goat + '\n\n*Nyt:* {permilles}‰ - *30min:* {permilles30Min}‰\n\n',
         header_nonuser: strings.emoji.goat + ' *Bäää - {title}* ' + strings.emoji.goat + '\n\n',
-        header_title: 'Bläkkisvuohi',
+        header_title: 'Keittovuohi',
         on_select_drinks3h: '\n\nViimeisen kolmen tunnin tapahtumat:\n{drinkList3h}',
         juo: {
             button_text: strings.emoji.glasses + ' Juo',
@@ -200,7 +200,7 @@ strings.commands = {
             },
             poista: {
                 button_text: strings.emoji.trash + ' Poista tunnus',
-                on_select: 'Olet poistamassa tunnuksesi. Hyväksymällä poistat kaiken sinuun liittyvän tiedon Bläkkisvuohen tietokannoista eikä sinua enää ole mahdollista listata missään listauksissa.\n\nOletko varma, että haluat poistaa tunnuksesi?',
+                on_select: 'Olet poistamassa tunnuksesi. Hyväksymällä poistat kaiken sinuun liittyvän tiedon Keittovuohen tietokannoista eikä sinua enää ole mahdollista listata missään listauksissa.\n\nOletko varma, että haluat poistaa tunnuksesi?',
                 double_confirm: 'Oletko aivan varma? Kaikki tietosi *poistetaan* jos klikkaat kyllä.',
                 canceled: 'Peruit tunnuksen poistamisen.',
                 deleted: 'Kaikki tietosi on nyt poistettu. Rippaa rauhassa.'
@@ -254,7 +254,7 @@ strings.commands = {
             general: {
                 button_text: 'Yleistä',
                 header_title: 'Help: Yleistä',
-                on_select: 'Bläkkisvuohi auttaa arvioimaan alkoholin määrää veressä eli promilleja. Botille tilastoidaan juomia sitä mukaa, kun niitä juodaan, ja botti laskee juoduista juomista promillet, palamisen huomioon ottaen. Lisäksi botin voi lisätä ryhmään ryhmätilastoja varten.\n\n*Käyttö*\n\nBotin käyttäminen on yksinkertaista. Juodut juomat tilastoidaan joko /juoma- tai /start- komentoja käyttäen ja botti laskee promillemäärän heti. Botin käyttö *vaatii tunnuksen* luomisen, jonka voi tehdä joko /tunnus- tai /start- komennoilla. Tunnus vaaditaan, jotta promillejen arviointi olisi mahdollisimman tarkkaa.'
+                on_select: 'Keittovuohi auttaa arvioimaan alkoholin määrää veressä eli promilleja. Botille tilastoidaan juomia sitä mukaa, kun niitä juodaan, ja botti laskee juoduista juomista promillet, palamisen huomioon ottaen. Lisäksi botin voi lisätä ryhmään ryhmätilastoja varten.\n\n*Käyttö*\n\nBotin käyttäminen on yksinkertaista. Juodut juomat tilastoidaan joko /juoma- tai /start- komentoja käyttäen ja botti laskee promillemäärän heti. Botin käyttö *vaatii tunnuksen* luomisen, jonka voi tehdä joko /tunnus- tai /start- komennoilla. Tunnus vaaditaan, jotta promillejen arviointi olisi mahdollisimman tarkkaa.'
             },
             faq: {
                 button_text: 'FAQ',
@@ -263,23 +263,23 @@ strings.commands = {
                 juominen: {
                     button_text: 'Juominen',
                     header_title: 'FAQ: Juominen',
-                    on_select: '*Kannattaako juoma merkata avatessa vai viimeistellessä?*\nJuomat kannattaa merkata silloin, kun ne avaa. Promillearvioinnissa oletetaan juoman imeytyvän 99-prosenttisesti 30 minuutissa. Lisäksi avatessa juoman muistaa merkata paremmin.\n\n*Kuinka tarkka promillejen arviointi on?*\nNoin 1.5‰ asti hyvin tarkka - tätä pidemmälle menneitä tutkimuksia ei ole tehty (jos on, laita viestiä @ultsi), joten laskukaava alkaa heittämään 1.5‰ jälkeen. Botin arviot ovat myös linjassa mm. lintukoto.net -laskurin kanssa.\n\n*Unohdin lisätä juomat, mitä nyt?*\nKäytä /jalkikellotus-komentoa, tai /start-valikosta löytyvää Jälkikellotus-nappulaa.'
+                    on_select: '*Kannattaako juoma merkata avatessa vai viimeistellessä?*\nJuomat kannattaa merkata silloin, kun ne avaa. Promillearvioinnissa oletetaan juoman imeytyvän 99-prosenttisesti 30 minuutissa. Lisäksi avatessa juoman muistaa merkata paremmin.\n\n*Kuinka tarkka promillejen arviointi on?*\nNoin 1.5‰ asti hyvin tarkka - tätä pidemmälle menneitä tutkimuksia ei ole tehty (jos on, kerro ylläpitäjälle), joten laskukaava alkaa heittämään 1.5‰ jälkeen. Botin arviot ovat myös linjassa mm. lintukoto.net -laskurin kanssa.\n\n*Unohdin lisätä juomat, mitä nyt?*\nKäytä /jalkikellotus-komentoa, tai /start-valikosta löytyvää Jälkikellotus-nappulaa.'
                 },
                 ryhmat: {
                     button_text: 'Ryhmät',
                     header_title: 'FAQ: Ryhmät',
-                    on_select: '*Miten voin liittyä ryhmään tai poistua ryhmästä?*\nKirjoita /moro, jos haluat liittyä ryhmään. Kirjoita /poistu, jos haluat poistua ryhmästä. Ryhmään liittyneenä sinun promilletasosi näkyy esim. /promillet-komennolla.\n\n*Miksi /kuvaaja -kuvassa kaikkien promillet laskee samaa tahtia?*\nPromillet kuvaavat alkoholin osuutta koko kehon verestä. Alkoholi palaa elimistössä nopeammin painavammilla ihmisillä, mutta veren määrä kehossa on tällöin myös suhteessa noin saman verran korkeampi. Tällöin promillejen väheneminen kehossa on kaikilla ihmisillä jotakuinkin sama.\n\n*Tallentaako Bläkkisvuohi ryhmän viestit?*\n*Ei tallenna.* Jos menet ryhmän käyttäjälistaukseen, Bläkkisvuohen kohdalla lukee "No access to messages", joka tarkoittaa, ettei Bläkkisvuohi voi millään tavalla lukea muita viestejä kuin komentoja.'
+                    on_select: '*Miten voin liittyä ryhmään tai poistua ryhmästä?*\nKirjoita /moro, jos haluat liittyä ryhmään. Kirjoita /poistu, jos haluat poistua ryhmästä. Ryhmään liittyneenä sinun promilletasosi näkyy esim. /promillet-komennolla.\n\n*Miksi /kuvaaja -kuvassa kaikkien promillet laskee samaa tahtia?*\nPromillet kuvaavat alkoholin osuutta koko kehon verestä. Alkoholi palaa elimistössä nopeammin painavammilla ihmisillä, mutta veren määrä kehossa on tällöin myös suhteessa noin saman verran korkeampi. Tällöin promillejen väheneminen kehossa on kaikilla ihmisillä jotakuinkin sama.\n\n*Tallentaako Keittovuohi ryhmän viestit?*\n*Ei tallenna.* Jos menet ryhmän käyttäjälistaukseen, Keittovuohen kohdalla lukee "No access to messages", joka tarkoittaa, ettei Keittovuohi voi millään tavalla lukea muita viestejä kuin komentoja.'
                 },
                 koodi: {
                     button_text: 'Koodi',
                     header_title: 'FAQ: Koodi',
-                    on_select: '*Miten Bläkkisvuohi on koodattu?*\nLyhyesti: NodeJS-javascript-frameworkilla, sekä sen liitännäisillä ja tietokantana toimii Postgres. Pitkästi: katso koko koodi osoitteesta https://github.com/ultsi/blakkisvuohi.\n\n*Keksin uuden ominaisuuden, minne voin ilmoittaa siitä?*\nTällä hetkellä kehittäjänä toimii @ultsi, jolle voi laittaa suoraan privaviestiä. Issuen lisääminen githubiin toimii kanssa. https://github.com/ultsi/blakkisvuohi/issues\n\n*Saako Bläkkisvuohen koodaamisesta rahaa?*\nItseasiassa, saa. Futuricen työntekijänä @ultsi saa avoimen lähdekoodin projektien tekemisestä korvausta \'Spice Program\'-ohjelman mukaan. (https://spiceprogram.org/)'
+                    on_select: '*Miten Keittovuohi on koodattu?*\nLyhyesti: NodeJS-javascript-frameworkilla, sekä sen liitännäisillä ja tietokantana toimii Postgres. Keittovuohi perustuu Joonas Ulmasen (@ultsi) avoimeen BläkkisVuohi-bottiin. Koko koodi löytyy osoitteesta https://github.com/ikeaenkeli-dot/keittovuohi.\n\n*Keksin uuden ominaisuuden, minne voin ilmoittaa siitä?*\nLaita viestiä botin ylläpitäjälle.'
                 }
             },
             privacy: {
                 button_text: 'Yksityisyys',
                 header_title: 'Help: Yksityisyys',
-                on_select: 'Sinun yksityisyys on turvattu Bläkkisvuohen kehittäjien toimesta mahdollisimman hyvin. Tässä muutama kohta yksityisyydestä:\n\n*Mitä tietoja kerätään?*\nBläkkisvuohen käyttö edellyttää seuraavien tietojen keräämistä:\n- Telegramiin määritelty nimimerkki tai nimi\n- Tiiviste(hash) Telegram-tilisi tunnisteesta (userId)\n- Paino\n- Pituus\n- Sukupuoli\n- Merkattujen juomien alkoholipitoisuudet, nimet ja juomisajat\n- Tiivisteet(hash) liityttyjen ryhmien tunnisteista (groupId)\n\n*Missä ja miten tietoja säilötään?*\nTietoja säilytetään virtuaalipalvelimella Euroopassa, ja vain Bläkkisvuohen ylläpitäjillä on sinne pääsy. Yksilöivät henkilötiedot on salattu salasanalla tietokannassa.\n\n*Minulla on lisäkysymyksiä yksityisyyteen liittyen!*\nOnnistuu, ota yhteyttä @ultsi.'
+                on_select: 'Sinun yksityisyys on turvattu Keittovuohen kehittäjien toimesta mahdollisimman hyvin. Tässä muutama kohta yksityisyydestä:\n\n*Mitä tietoja kerätään?*\nKeittovuohen käyttö edellyttää seuraavien tietojen keräämistä:\n- Telegramiin määritelty nimimerkki tai nimi\n- Tiiviste(hash) Telegram-tilisi tunnisteesta (userId)\n- Paino\n- Pituus\n- Sukupuoli\n- Merkattujen juomien alkoholipitoisuudet, nimet ja juomisajat\n- Tiivisteet(hash) liityttyjen ryhmien tunnisteista (groupId)\n\n*Missä ja miten tietoja säilötään?*\nTietoja säilytetään virtuaalipalvelimella Euroopassa, ja vain Keittovuohen ylläpitäjillä on sinne pääsy. Yksilöivät henkilötiedot on salattu salasanalla tietokannassa.\n\n*Minulla on lisäkysymyksiä yksityisyyteen liittyen!*\nOnnistuu, ota yhteyttä botin ylläpitäjään.'
             }
         }
     },
@@ -385,7 +385,7 @@ strings.commands = {
     /* /terms */
     terms: {
         cmd_description: '/terms - Terms of Service',
-        reply: '*Käyttöehdot*\n\nKäyttämällä Bläkkisvuohea olet hyväksynyt seuraavat käyttöehdot. Bläkkisvuohen päätarkoitus on arvioida alkoholin määrää kehossa. Bläkkisvuohen toiminta voi muuttua tai pysähtyä milloin vain. Sinun täytyy olla yli 18 vuotta käyttääksesi Bläkkisvuohea. Bläkkisvuohen kehittäjät tai ylläpitäjät eivät ole vastuussa mistään suorasta tai epäsuorasta haitasta, jota palvelun käyttäminen voi aiheuttaa. Bläkkisvuohi on ilmainen käyttää. Ominaisuuksien, kuten promillejen arvioiminen, takia Bläkkisvuohi tallentaa käyttäjistä erinäisiä tietoja ja käyttää näitä hyväksi laskennassa. Sinuun suoraan linkitettävät tiedot salataan ennen tallentamista. Tietoja ei koskaan anneta tai myydä eteenpäin kolmansille osapuolille. Tallennetut tiedot voidaan poistaa pyynnöstä.\n\nBläkkisvuohen tuottamat arviot ovat arvioita, eikä niihin voi missään tapauksessa täysin luottaa. Noudata lakia, kun käytät alkoholia.\n\nNämä käyttöehdot voivat muuttua milloin vain ilman erillistä huomautusta. Uusimmat käyttöehdot voi aina lukea /terms-komennolla. Nämä käyttöehdot ovat voimassa 10.01.2018 lähtien.',
+        reply: '*Käyttöehdot*\n\nKäyttämällä Keittovuohta olet hyväksynyt seuraavat käyttöehdot. Keittovuohen päätarkoitus on arvioida alkoholin määrää kehossa. Keittovuohen toiminta voi muuttua tai pysähtyä milloin vain. Sinun täytyy olla yli 18 vuotta käyttääksesi Keittovuohta. Keittovuohen kehittäjät tai ylläpitäjät eivät ole vastuussa mistään suorasta tai epäsuorasta haitasta, jota palvelun käyttäminen voi aiheuttaa. Keittovuohi on ilmainen käyttää. Ominaisuuksien, kuten promillejen arvioiminen, takia Keittovuohi tallentaa käyttäjistä erinäisiä tietoja ja käyttää näitä hyväksi laskennassa. Sinuun suoraan linkitettävät tiedot salataan ennen tallentamista. Tietoja ei koskaan anneta tai myydä eteenpäin kolmansille osapuolille. Tallennetut tiedot voidaan poistaa pyynnöstä.\n\nKeittovuohen tuottamat arviot ovat arvioita, eikä niihin voi missään tapauksessa täysin luottaa. Noudata lakia, kun käytät alkoholia.\n\nNämä käyttöehdot voivat muuttua milloin vain ilman erillistä huomautusta. Uusimmat käyttöehdot voi aina lukea /terms-komennolla. Nämä käyttöehdot ovat voimassa 10.01.2018 lähtien.',
     },
 
     /* /tunnus */

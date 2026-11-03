@@ -93,4 +93,4 @@ const start = {
     [str_start.help.button_text]: require('./start/help.js')
 };
 
-Commands.register('/start', 'Bläkkisvuohi v4 -valikko', Commands.SCOPE_PRIVATE, Commands.PRIVILEGE_ALL, Commands.TYPE_INLINE, start);
+Commands.register('/start', 'Keittovuohi-valikko', Commands.SCOPE_PRIVATE, Commands.PRIVILEGE_ALL, Commands.TYPE_INLINE, start);
