@@ -33,8 +33,16 @@ const groups = require('../db/groups.js');
 const constants = require('../constants.js');
 const strings = require('../strings.js');
 
+const MAX_DRINKS_SHOWN = 60;
+
 function makeDrinksString(drinks) {
     let list = [];
+    let hidden = 0;
+    if (drinks.length > MAX_DRINKS_SHOWN) {
+        hidden = drinks.length - MAX_DRINKS_SHOWN;
+        drinks = drinks.slice(0, MAX_DRINKS_SHOWN); // list is newest first
+        list.push('(' + hidden + ' vanhempaa juomaa piilotettu)');
+    }
     let day = null;
     for (var i in drinks) {
         let drink = drinks[i];

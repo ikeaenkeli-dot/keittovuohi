@@ -78,16 +78,67 @@ function withoutParseMode(options) {
     return copy;
 }
 
+// Telegram's limit is 4096 characters per message, keep a margin
+const MAX_MESSAGE_LENGTH = 4000;
+
+/*
+    Split a long text into pieces under the limit, preferring to cut
+    between lines so list rows stay whole.
+*/
+utils.splitLongText = function(text, max) {
+    max = max || MAX_MESSAGE_LENGTH;
+    text = String(text);
+    if (text.length <= max) {
+        return [text];
+    }
+    const parts = [];
+    let current = '';
+    for (let line of text.split('\n')) {
+        while (line.length > max) { // a single huge line: hard cut
+            if (current) {
+                parts.push(current);
+                current = '';
+            }
+            parts.push(line.slice(0, max));
+            line = line.slice(max);
+        }
+        const candidate = current ? current + '\n' + line : line;
+        if (candidate.length > max) {
+            parts.push(current);
+            current = line;
+        } else {
+            current = candidate;
+        }
+    }
+    if (current) {
+        parts.push(current);
+    }
+    return parts;
+};
+
+function sendOne(bot, chatId, text, options) {
+    return bot.sendMessage(chatId, text, options)
+        .catch((err) => {
+            if (!isMarkdownParseError(err, options)) {
+                throw err;
+            }
+            log.warn('Markdown parse failed, resending as plain text');
+            return bot.sendMessage(chatId, text, withoutParseMode(options));
+        });
+}
+
 function createSendMsgToFunction(msg, bot) {
     return function(chatId, text, options) {
-        return bot.sendMessage(chatId, text, options)
-            .catch((err) => {
-                if (!isMarkdownParseError(err, options)) {
-                    throw err;
-                }
-                log.warn('Markdown parse failed, resending as plain text');
-                return bot.sendMessage(chatId, text, withoutParseMode(options));
-            })
+        const parts = utils.splitLongText(text);
+        // Buttons/keyboards only on the last part
+        const optionsFor = (i) => (i < parts.length - 1 && options && options.reply_markup) ?
+            Object.assign({}, options, { reply_markup: undefined }) : options;
+        // First part is sent right away, the rest in order after it
+        let chain = sendOne(bot, chatId, parts[0], optionsFor(0));
+        parts.slice(1).forEach((part, i) => {
+            chain = chain.then(() => sendOne(bot, chatId, part, optionsFor(i + 1)));
+        });
+        return chain
             .then(() => {
                 log.debug('sent ' + text + ' to chat ' + chatId);
                 return Promise.resolve();
@@ -119,6 +170,9 @@ function createSendPhotoFunction(msg, bot) {
 
 function createEditMessageTextFunction(msg, bot) {
     return function(text, options) {
+        if (String(text).length > MAX_MESSAGE_LENGTH) {
+            text = String(text).slice(0, MAX_MESSAGE_LENGTH - 2) + '\n…';
+        }
         return bot.editMessageText(text, options)
             .catch((err) => {
                 if (!isMarkdownParseError(err, options)) {

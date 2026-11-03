@@ -91,4 +91,33 @@ describe('markdown safety', function() {
             })
             .catch(done);
     });
+
+    it('long messages should be split into several messages at line breaks', function(done) {
+        const bot = mockBot();
+        const msg = { from: { id: 1 }, chat: { id: 1 } };
+        utils.attachMethods(msg, bot);
+        const lines = [];
+        for (let i = 1; i <= 200; i++) {
+            lines.push(i + '. kayttaja_numero_' + i + ': 0,52 ‰ | 12h 3,1 | 24h 4,0');
+        }
+        const text = lines.join('\n');
+        assert(text.length > 4096);
+        msg.sendMessage(1, text, { parse_mode: 'Markdown', reply_markup: { remove_keyboard: true } })
+            .then(() => {
+                assert(bot.calls.length >= 2);
+                bot.calls.forEach((c) => assert(c.text.length <= 4096));
+                assert.equal(bot.calls.map(c => c.text).join('\n'), text); // nothing lost, rows intact
+                assert.equal(bot.calls[0].options.reply_markup, undefined);
+                assert(bot.calls[bot.calls.length - 1].options.reply_markup);
+                done();
+            })
+            .catch(done);
+    });
+
+    it('splitLongText should keep short texts as one piece and hard-cut huge lines', function() {
+        assert.deepEqual(utils.splitLongText('hei'), ['hei']);
+        const parts = utils.splitLongText('x'.repeat(9000));
+        assert.equal(parts.join(''), 'x'.repeat(9000));
+        parts.forEach(p => assert(p.length <= 4000));
+    });
 });
