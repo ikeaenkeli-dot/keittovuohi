@@ -184,12 +184,12 @@ strings.commands = {
                 on_select: 'Voit muokata tässä tunnuksesi painoa, pituutta ja sukupuolta sekä päivittää nimimerkin.\n\nNykyiset tiedot:\n*Nimimerkki:* {username}\n*Paino:* {weight}kg\n*Pituus:* {height}cm\n*Sukupuoli:* {gender}\n*ID:* {user_id}\n*Käyttäjä luotu:* {created}',
                 paino: {
                     button_text: strings.emoji.scale + ' Muokkaa painoa',
-                    on_select: '*Paino nyt:* {weight}kg\n\nSyötä uusi painosi kokonaislukuna.',
+                    on_select: '*Paino nyt:* {weight}kg\n\nKirjoita uusi painosi kiloina pelkkänä kokonaislukuna väliltä 20–250, esimerkiksi 75.',
                     on_change: 'Paino muutettu!'
                 },
                 pituus: {
                     button_text: strings.emoji.ruler + ' Muokkaa pituutta',
-                    on_select: '*Pituus nyt:* {height}cm\n\nSyötä uusi pituutesi kokonaislukuna.',
+                    on_select: '*Pituus nyt:* {height}cm\n\nKirjoita uusi pituutesi senttimetreinä pelkkänä kokonaislukuna, esimerkiksi 180.',
                     on_change: 'Pituus muutettu!'
                 },
                 sukupuoli: {
@@ -213,17 +213,17 @@ strings.commands = {
         luo_tunnus: {
             button_text: strings.emoji.glowing_star + ' Luo tunnus',
             header_title: 'Luo tunnus',
-            on_select: 'Tarvitset tunnusta käyttääksesi suurinta osaa botin ominaisuuksista. Aloita tunnuksen luominen syöttämällä painosi kilogrammoissa ja kokonaislukuna:',
-            weight_error: 'Syötä paino uudelleen. Painon pitää olla kokonaisluku ja ala- ja ylärajat ovat 20kg ja 250kg.',
-            height: 'Paino syötetty. Syötä seuraavaksi pituus senttimetreissä:',
+            on_select: 'Tarvitset tunnuksen käyttääksesi suurinta osaa botin ominaisuuksista. Kysyn neljä asiaa: paino, pituus, sukupuoli ja käyttöehtojen hyväksyntä. Vastaa jokaiseen omalla viestillään.\n\n*Vaihe 1/4: Paino*\nKirjoita painosi kiloina pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 75\n❌ Väärin: 75kg, 75,5\n\nSallittu väli: 20–250',
+            weight_error: 'Painoa ei hyväksytty. Kirjoita pelkkä kokonaisluku väliltä 20–250, esimerkiksi 75 (ei 75kg tai 75,5).',
+            height: 'Paino tallennettu.\n\n*Vaihe 2/4: Pituus*\nKirjoita pituutesi senttimetreinä pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 180\n❌ Väärin: 180cm, 1.80\n\nSallittu väli: 120–240',
             height_error: 'Syötä pituus uudelleen. Pituuden täytyy olla kokonaisluku ja ala- ja ylärajat ovat 120cm ja 240cm.',
-            gender: 'Pituus syötetty. Syötä seuraavaksi biologinen sukupuoli:',
-            gender_error: 'Syötä joko mies tai nainen:',
-            terms: 'Sukupuoli syötetty. \n\n{terms}\n\nOletko lukenut ja hyväksynyt käyttöehdot?',
+            gender: 'Pituus tallennettu.\n\n*Vaihe 3/4: Sukupuoli*\nPromillelaskenta tarvitsee biologisen sukupuolen, koska alkoholi jakautuu kehoon eri tavalla.\n\nValitse alta *Mies* tai *Nainen*.',
+            gender_error: 'Sukupuolta ei hyväksytty. Paina alta *Mies* tai *Nainen*, tai kirjoita pelkkä sana mies tai nainen.',
+            terms: 'Sukupuoli tallennettu.\n\n{terms}\n\n*Vaihe 4/4: Hyväksyntä*\nHyväksytkö käyttöehdot? Valitse alta *Kyllä* tai *En*.',
             terms_answer_yes: 'Kyllä',
             terms_answer_no: 'En',
-            terms_on_reject: 'Lue käyttöehdot ja hyväksy ne, ennen kuin voit käyttää muita komentoja.',
-            terms_error: 'Oletko lukenut ja hyväksynyt käyttöehdot?',
+            terms_on_reject: 'Tunnusta ei luotu, koska et hyväksynyt käyttöehtoja. Voit aloittaa alusta milloin tahansa komennolla /tunnus.',
+            terms_error: 'Vastausta ei tunnistettu. Paina alta *Kyllä* tai *En*, tai kirjoita kyllä tai en.',
             update: 'Olet jo rekisteröitynyt. Tiedot päivitetty.',
             update_error: 'Olet jo rekisteröitynyt, mutta tietojen päivityksessä tuli ongelma. Ota yhteyttä adminiin.',
             new_user: 'Moikka {username}! Tunnuksesi luotiin onnistuneesti. Muista, että kaikki antamani luvut ovat vain arvioita, eikä niihin voi täysin luottaa.\n\nJa eikun juomaan!'
@@ -391,17 +391,17 @@ strings.commands = {
     /* /tunnus */
     tunnus: {
         cmd_description: '/tunnus - Luo itsellesi uusi tunnus tai muokkaa tunnustasi.',
-        start: 'Tervetuloa tunnuksen luomiseen tai päivittämiseen. Alkoholilaskuria varten tarvitsen seuraavat tiedot: paino, pituus ja sukupuoli.\n\nSyötä ensimmäiseksi paino kilogrammoissa ja kokonaislukuna:',
-        start_error: 'Syötä paino uudelleen. Painon pitää olla kokonaisluku ja ala- ja ylärajat ovat 20kg ja 250kg.',
-        height: 'Paino tallennettu. Syötä seuraavaksi pituus senttimetreissä:',
+        start: 'Tervetuloa tunnuksen luomiseen tai päivittämiseen! Kysyn neljä asiaa: paino, pituus, sukupuoli ja käyttöehtojen hyväksyntä. Vastaa jokaiseen omalla viestillään.\n\n*Vaihe 1/4: Paino*\nKirjoita painosi kiloina pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 75\n❌ Väärin: 75kg, 75,5\n\nSallittu väli: 20–250',
+        start_error: 'Painoa ei hyväksytty. Kirjoita pelkkä kokonaisluku väliltä 20–250, esimerkiksi 75 (ei 75kg tai 75,5).',
+        height: 'Paino tallennettu.\n\n*Vaihe 2/4: Pituus*\nKirjoita pituutesi senttimetreinä pelkkänä kokonaislukuna, ilman yksikköä.\n\n✅ Oikein: 180\n❌ Väärin: 180cm, 1.80\n\nSallittu väli: 120–240',
         height_error: 'Syötä pituus uudelleen. Pituuden täytyy olla kokonaisluku ja ala- ja ylärajat ovat 120cm ja 240cm.',
-        gender: 'Pituus tallennettu. Syötä seuraavaksi sukupuoli:',
-        gender_error: 'Syötä joko mies tai nainen:',
-        terms: 'Sukupuoli tallennettu. \n\n{terms}\n\nOletko lukenut ja hyväksynyt käyttöehdot?',
+        gender: 'Pituus tallennettu.\n\n*Vaihe 3/4: Sukupuoli*\nPromillelaskenta tarvitsee biologisen sukupuolen, koska alkoholi jakautuu kehoon eri tavalla.\n\nPaina alta *Mies* tai *Nainen*. Voit myös kirjoittaa sanan mies tai nainen.',
+        gender_error: 'Sukupuolta ei hyväksytty. Paina alta *Mies* tai *Nainen*, tai kirjoita pelkkä sana mies tai nainen.',
+        terms: 'Sukupuoli tallennettu.\n\n{terms}\n\n*Vaihe 4/4: Hyväksyntä*\nHyväksytkö käyttöehdot? Paina alta *Kyllä* tai *En*, tai kirjoita kyllä tai en.',
         terms_answer_yes: 'Kyllä',
         terms_answer_no: 'En',
-        terms_on_reject: 'Lue käyttöehdot ja hyväksy ne, ennen kuin voit käyttää muita komentoja.',
-        terms_error: 'Oletko lukenut ja hyväksynyt käyttöehdot?',
+        terms_on_reject: 'Tunnusta ei luotu, koska et hyväksynyt käyttöehtoja. Voit aloittaa alusta milloin tahansa komennolla /tunnus.',
+        terms_error: 'Vastausta ei tunnistettu. Paina alta *Kyllä* tai *En*, tai kirjoita kyllä tai en.',
         update: 'Olet jo rekisteröitynyt. Tiedot päivitetty.',
         update_error: 'Olet jo rekisteröitynyt, mutta tietojen päivityksessä tuli ongelma. Ota yhteyttä adminiin.',
         new_user: 'Moikka {username}! Tunnuksesi luotiin onnistuneesti. Muista, että kaikki antamani luvut ovat vain arvioita, eikä niihin voi täysin luottaa. Ja eikun juomaan!'
