@@ -43,9 +43,26 @@ module.exports = function(bot, token) {
         });
     });
 
+    // Telegram re-sends an update if it didn't get an answer in time
+    // (e.g. while the server was waking up). Remember recent update ids
+    // and skip ones that were already handled.
+    const seenUpdates = new Set();
+    const MAX_SEEN = 2000;
+
     app.post(path, (req, res) => {
-        bot.processUpdate(req.body);
         res.sendStatus(200);
+        const update = req.body || {};
+        if (update.update_id !== undefined) {
+            if (seenUpdates.has(update.update_id)) {
+                log.info('Skipped duplicate update ' + update.update_id);
+                return;
+            }
+            seenUpdates.add(update.update_id);
+            if (seenUpdates.size > MAX_SEEN) {
+                seenUpdates.delete(seenUpdates.values().next().value);
+            }
+        }
+        bot.processUpdate(update);
     });
 
     const port = process.env.PORT || 3000;

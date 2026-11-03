@@ -29,8 +29,12 @@ const utils = require('../lib/utils.js');
 const alcomath = require('../lib/alcomath.js');
 const announcements = require('../announcements.js');
 const settings = require('../settings.js');
+const constants = require('../constants.js');
 
 let users = module.exports = {};
+
+// userId -> promise of that user's latest drink insert
+const drinkQueues = new Map();
 
 class User {
     constructor(userId, username, weight, gender, height, read_terms, read_announcements, created) {
@@ -48,7 +52,34 @@ class User {
     }
 
     drinkBooze(amount, description) {
-        return pool.query('insert into users_drinks (userId, alcohol, description) values($1, $2, $3)', [this.userId, amount, description]);
+        // One user's drinks are saved one at a time, so taps arriving at the
+        // same moment can see each other and duplicates are caught
+        const userId = this.userId;
+        const previous = drinkQueues.get(userId) || Promise.resolve();
+        const next = previous.catch(() => {}).then(() => this._insertDrinkIfNotDuplicate(amount, description));
+        drinkQueues.set(userId, next);
+        const cleanup = () => {
+            if (drinkQueues.get(userId) === next) {
+                drinkQueues.delete(userId);
+            }
+        };
+        next.then(cleanup, cleanup);
+        return next;
+    }
+
+    _insertDrinkIfNotDuplicate(amount, description) {
+        // Insert only if the same drink wasn't just logged (see DUPLICATE_DRINK_SECONDS)
+        return pool.query('insert into users_drinks (userId, alcohol, description) ' +
+                'select $1, $2, $3 where not exists (' +
+                'select 1 from users_drinks where userId = $1 and description = $3 ' +
+                'and created > now() - make_interval(secs => $4))',
+                [this.userId, amount, description, constants.DUPLICATE_DRINK_SECONDS])
+            .then((res) => {
+                if (res.rowCount === 0) {
+                    log.info('Ignored duplicate drink "' + description + '"');
+                }
+                return res;
+            });
     }
 
     getBooze() {

@@ -38,6 +38,11 @@ constants.calcAlcoholMilligrams = function(vol_perc, amount) {
     return Math.round(vol_perc * constants.ETANOL_GRAMS_PER_LITRE * amount * 1000);
 };
 
+// The same drink logged again for the same user within this many seconds
+// is treated as a duplicate (button tapped many times, Telegram re-sending
+// an update while the bot was waking up...) and is not saved again.
+constants.DUPLICATE_DRINK_SECONDS = 10;
+
 constants.KALJA033 = constants.calcAlcoholMilligrams(0.047, 0.33);
 constants.NELONEN = constants.calcAlcoholMilligrams(0.055, 0.33);
 constants.KALJA05 = constants.calcAlcoholMilligrams(0.047, 0.50);

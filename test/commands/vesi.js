@@ -27,6 +27,7 @@
 require('../../app/commands/vesi.js');
 require('../../app/commands/vedet.js');
 require('../../app/commands/kalja05.js');
+require('../../app/commands/kalja033.js');
 require('../../app/commands/start.js');
 
 const assert = require('assert');
@@ -67,7 +68,7 @@ describe('vesi.js & vedet.js', function() {
         mocked.msg.from.id = blakkistest.realIds[0];
 
         Commands.call('/vesi', mocked.msg, ['/vesi'])
-            .then(() => Commands.call('/vesi', mocked.msg, ['/vesi']))
+            .then(() => blakkistest.users[0].drinkBooze(0, '🥤 Limsa'))
             .then(() => Commands.call('/kalja05', mocked.msg, ['/kalja05']))
             .then(() => {
                 mocked.msg.chat.id = blakkistest.groups[0].realId;
@@ -116,6 +117,44 @@ describe('vesi.js & vedet.js', function() {
                 assert(water);
                 assert.equal(water.alcohol, 0);
                 assert.notEqual(mocked.internals.editText.indexOf('1 kpl'), -1);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it('the same drink tapped many times in a row should be saved only once', function(done) {
+        const mocked = blakkistest.mockMsgAndBot();
+        const user = blakkistest.users[0];
+        mocked.msg.from.id = blakkistest.realIds[0];
+        let before;
+        user.getBooze()
+            .then((rows) => {
+                before = rows.length;
+                // 4 taps arriving at once, like after the bot wakes up
+                return Promise.all([1, 2, 3, 4].map(() => Commands.call('/kalja05', mocked.msg, ['/kalja05'])));
+            })
+            .then(() => user.getBooze())
+            .then((rows) => {
+                assert.equal(rows.length, before + 1);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it('different drinks right after each other should both be saved', function(done) {
+        const mocked = blakkistest.mockMsgAndBot();
+        const user = blakkistest.users[0];
+        mocked.msg.from.id = blakkistest.realIds[0];
+        let before;
+        user.getBooze()
+            .then((rows) => {
+                before = rows.length;
+                return Commands.call('/kalja05', mocked.msg, ['/kalja05']);
+            })
+            .then(() => Commands.call('/kalja033', mocked.msg, ['/kalja033']))
+            .then(() => user.getBooze())
+            .then((rows) => {
+                assert.equal(rows.length, before + 2);
                 done();
             })
             .catch((err) => done(err));

@@ -54,6 +54,11 @@ module.exports = function(bot) {
 
     bot.on('callback_query', (msg) => {
         syslog.debug(msg);
+        // Tell Telegram right away that the button press was received, so the
+        // button stops spinning and people don't tap it again and again
+        if (typeof bot.answerCallbackQuery === 'function') {
+            bot.answerCallbackQuery(msg.id).catch(() => {});
+        }
         utils.attachMethods(msg, bot);
         Commands.call('', msg, []);
     });
