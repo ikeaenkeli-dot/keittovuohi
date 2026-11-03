@@ -92,6 +92,9 @@ async function main() {
     // Load app (registers message handlers and commands)
     require('./app/init.js')(bot);
 
+    // Show all commands in Telegram's "/" menu (failure here is not fatal)
+    await require('./app/lib/command-menu.js').publish(bot);
+
     if (BOT_MODE === 'polling') {
         bot.on('polling_error', (err) => syslog.error('Polling error: ' + (err.message || err)));
         await bot.startPolling();
