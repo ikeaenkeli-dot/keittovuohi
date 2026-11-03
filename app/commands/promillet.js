@@ -94,12 +94,13 @@ function listPermilles(context, msg, words, user) {
         });
     } else {
         let group = new groups.Group(msg.chat.id);
-        return group.getPermillesListing()
-            .then((permillesListing) => {
+        return Promise.all([group.getPermillesListing(), group.getMembers()])
+            .then(([permillesListing, members]) => {
                 const str = strings.commands.promillet;
                 if (permillesListing.length === 0) {
                     return context.chatReply(str.text_group_empty.format({
-                        chat_title: msg.chat.title || ''
+                        chat_title: msg.chat.title || '',
+                        members: members.length
                     }));
                 }
                 const listText = permillesListing.map((user, i) => str.text_group_list_item.format({
@@ -110,6 +111,8 @@ function listPermilles(context, msg, words, user) {
                     drinks24h: utils.fiNumber(user[3], 1)
                 }));
                 const text = str.text_group.format({
+                    shown: permillesListing.length,
+                    members: members.length,
                     chat_title: msg.chat.title || '',
                     list: listText.join('\n')
                 });

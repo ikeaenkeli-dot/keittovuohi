@@ -48,6 +48,26 @@ Group.prototype.getDrinkSumForXHours = function(hours) {
         .then((res) => Promise.resolve(res.rows[0]));
 };
 
+/*
+    Everyone who has joined this group with /moro, with their drink
+    count for the last 24h and the time of their latest drink.
+*/
+Group.prototype.getMembers = function() {
+    const dayAgo = utils.getDateMinusHours(24);
+    return pool.query('select users.userId, users.nick, ' +
+            'count(users_drinks.id) filter (where users_drinks.alcohol > 0 and users_drinks.created >= $2) as drinks24h, ' +
+            'max(users_drinks.created) as last_drink ' +
+            'from users_in_groups join users on users.userId=users_in_groups.userId ' +
+            'left join users_drinks on users_drinks.userId=users.userId ' +
+            'where users_in_groups.groupId=$1 group by users.userId, users.nick', [this.groupId, dayAgo])
+        .then((res) => res.rows.map((row) => ({
+            userid: row.userid,
+            nick: utils.decrypt(row.nick),
+            drinks24h: parseInt(row.drinks24h, 10) || 0,
+            lastDrink: row.last_drink ? new Date(row.last_drink) : null
+        })).sort((a, b) => a.nick.toLowerCase().localeCompare(b.nick.toLowerCase())));
+};
+
 Group.prototype.getNonAlcoholicCountsByUser = function(hours) {
     const hoursAgo = utils.getDateMinusHours(hours || 24);
     return pool.query('select users.userId, users.nick, count(users_drinks.id) as count from users_in_groups join users on users.userId=users_in_groups.userId join users_drinks on users_drinks.userId=users_in_groups.userId and users_drinks.alcohol = 0 and users_drinks.created >= $2 where users_in_groups.groupId=$1 group by users.userId, users.nick order by count desc', [this.groupId, hoursAgo])

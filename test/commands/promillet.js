@@ -59,7 +59,8 @@ describe('promillet.js', function() {
             .then(() => {
                 assert.equal(mocked.internals.sentChatId, mocked.msg.chat.id);
                 assert.equal(mocked.internals.sentText, strings.commands.promillet.text_group_empty.format({
-                    chat_title: mocked.msg.chat.title
+                    chat_title: mocked.msg.chat.title,
+                    members: 0
                 }));
                 done();
             })

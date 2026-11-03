@@ -115,6 +115,15 @@ strings.commands = {
     },
 
     /* /admin_stats */
+    admin_jasenet: {
+        cmd_description: '/admin_jasenet - kaikki ryhmään /moro-komennolla liittyneet (vain admin, käytä ryhmässä)',
+        header: '👥 {chat_title}: liittyneet ({count})\n\nnimi | juomia 24h | viimeisin juoma\n',
+        item: '{rank}. {username} | {drinks24h} | {last_drink}',
+        never: 'ei juomia',
+        empty: '👥 {chat_title}: kukaan ei ole vielä liittynyt /moro-komennolla.',
+        use_in_group: 'Käytä komentoa siinä ryhmässä, jonka jäsenet haluat nähdä. Lista tulee sinulle yksityisviestinä, eikä ryhmään näy mitään.'
+    },
+
     admin_stats: {
         cmd_description: '/admin_stats - listaa botin statsit',
         stats_text: 'Tilastoja:\nKäyttäjiä on yhteensä {usersCount}kpl, joista 14pv sisällä aktiivisia {activeUsers14DaysCount}, ja 7pv sisällä aktiivisia {activeUsers7DaysCount}.\nRyhmiä on yhteensä {groupsCount}kpl, joista 14pv sisällä aktiivisia {activeGroups14DaysCount}, ja 7pv sisällä aktiivisia {activeGroups7DaysCount}. Lisäksi kaikki käyttäjät ovat yhteensä tilastoineet {global_drinks_count} juomaa.\nTop10 tilastot:\n\n{top10List}',
@@ -138,9 +147,9 @@ strings.commands = {
 
     annokset: {
         cmd_description: '/annokset - ryhmän annokset: elimistössä nyt ja juotu 12h/24h aikana',
-        text_group: '🍻 {chat_title}: annokset\n\nnyt = annoksia elimistössä juuri nyt\n12h / 24h = juotu viimeisen 12 / 24 tunnin aikana\n\n{list}',
+        text_group: '🍻 {chat_title}: annokset\n\nnyt = annoksia elimistössä juuri nyt\n12h / 24h = juotu viimeisen 12 / 24 tunnin aikana\n\n{list}\n\nListalla näkyvät ne, joilla on nyt alkoholia elimistössä ({shown}/{members} liittyneestä). Etkö näy? Kirjoita ryhmään /moro ja kirjaa juoma botille.',
         text_group_list_item: '{rank}. {username}: nyt {standard_drinks} | 12h {drinks12h} | 24h {drinks24h}',
-        text_group_empty: '🍻 {chat_title}: kenelläkään ei ole juuri nyt alkoholia elimistössä.'
+        text_group_empty: '🍻 {chat_title}: kenelläkään ei ole juuri nyt alkoholia elimistössä ({members} liittynyt).'
     },
 
     start: {
@@ -404,9 +413,9 @@ strings.commands = {
     /* /promillet */
     promillet: {
         cmd_description: '/promillet - omat tai ryhmän promillet',
-        text_group: '📊 {chat_title}: promillet\n\n‰ = arvio juuri nyt\n12h / 24h = annoksia juotu viimeisen 12 / 24 tunnin aikana\n\n{list}',
+        text_group: '📊 {chat_title}: promillet\n\n‰ = arvio juuri nyt\n12h / 24h = annoksia juotu viimeisen 12 / 24 tunnin aikana\n\n{list}\n\nListalla näkyvät ne, joilla on nyt promilleja ({shown}/{members} liittyneestä). Etkö näy? Kirjoita ryhmään /moro ja kirjaa juoma botille.',
         text_group_list_item: '{rank}. {username}: {permilles} ‰ | 12h {drinks12h} | 24h {drinks24h}',
-        text_group_empty: '📊 {chat_title}: kenelläkään ei ole juuri nyt promilleja.'
+        text_group_empty: '📊 {chat_title}: kenelläkään ei ole juuri nyt promilleja ({members} liittynyt).'
     },
 
     /* /stats */

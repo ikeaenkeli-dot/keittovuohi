@@ -95,12 +95,13 @@ function annokset(context, msg, words, user) {
         });
     } else {
         let group = new groups.Group(msg.chat.id);
-        return group.getStandardDrinksListing(msg.chat.id)
-            .then((standardDrinksListing) => {
+        return Promise.all([group.getStandardDrinksListing(msg.chat.id), group.getMembers()])
+            .then(([standardDrinksListing, members]) => {
                 const str = strings.commands.annokset;
                 if (standardDrinksListing.length === 0) {
                     return context.chatReply(str.text_group_empty.format({
-                        chat_title: msg.chat.title || ''
+                        chat_title: msg.chat.title || '',
+                        members: members.length
                     }));
                 }
                 const listText = standardDrinksListing.map((user, i) => str.text_group_list_item.format({
@@ -111,6 +112,8 @@ function annokset(context, msg, words, user) {
                     drinks24h: utils.fiNumber(user[3], 1)
                 }));
                 const text = str.text_group.format({
+                    shown: standardDrinksListing.length,
+                    members: members.length,
                     chat_title: msg.chat.title || '',
                     list: listText.join('\n')
                 });
