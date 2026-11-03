@@ -33,7 +33,7 @@ const syslog = log.getLogger('system');
 syslog.setLevel('info');
 
 const TOKEN = process.env.TOKEN;
-const BOT_MODE = (process.env.BOT_MODE || 'polling').toLowerCase();
+const BOT_MODE = (process.env.BOT_MODE || 'polling').trim().toLowerCase();
 
 function fail(text) {
     syslog.error('CONFIG ERROR: ' + text);

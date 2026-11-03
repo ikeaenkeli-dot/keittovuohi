@@ -27,7 +27,7 @@
 
 const pg = require('pg');
 
-const useSsl = process.env.DATABASE_SSL === 'true';
+const useSsl = String(process.env.DATABASE_SSL || '').trim().toLowerCase() === 'true';
 
 module.exports = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
