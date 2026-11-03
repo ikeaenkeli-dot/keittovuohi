@@ -33,6 +33,10 @@ const syslog = log.getLogger('system');
 syslog.setLevel('info');
 
 const TOKEN = process.env.TOKEN;
+// Render.com provides the public address automatically
+if (!process.env.APP_URL && process.env.RENDER_EXTERNAL_URL) {
+    process.env.APP_URL = process.env.RENDER_EXTERNAL_URL;
+}
 const BOT_MODE = (process.env.BOT_MODE || 'polling').trim().toLowerCase();
 
 function fail(text) {
