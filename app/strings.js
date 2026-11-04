@@ -191,8 +191,8 @@ strings.commands = {
                 button_text: strings.emoji.memo + ' Oma juoma',
                 header_title: 'Oma juoma',
                 on_select: 'Tilastoi oma juomasi. {help_example}',
-                help_example: 'Kirjoita juoma muodossa senttilitrat prosentit.\nEsim.\n33cl 5.1%, tai 33 5.1',
-                error_words: 'Liian paljon tai vähän sanoja. {help_example}',
+                help_example: 'Kirjoita määrä ja alkoholiprosentti, esimerkiksi:\n15cl 13,5%\n33 5,1\n0,5l 4,7%\n4cl 40%',
+                error_words: 'En ymmärtänyt juomaa. {help_example}',
                 error_cl: 'Senttilitrat ei ole numero. {help_example}',
                 error_vol: 'Prosentti ei ole numero. {help_example}',
                 error_exceeds: 'Absoluuttisen alkoholin määrä on liian suuri. Tarkista numerot.'

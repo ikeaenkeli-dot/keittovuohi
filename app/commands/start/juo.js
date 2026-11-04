@@ -157,31 +157,22 @@ module.exports = {
         _headerTitle: str_juo.oma.header_title,
         _userRequired: true,
         _onText: (context, user, msg, words) => {
-            if (words.length !== 2) {
+            const drink = utils.parseDrinkInput(msg.text || words.join(' '));
+            if (!drink) {
                 return Promise.resolve(str_juo.oma.error_words.format({
                     help_example: str_juo.oma.help_example
                 }));
             }
-            const cl = words[0].replace('cl', ''),
-                vol = words[1].replace('%', '');
-
-            if (!utils.isValidFloat(cl)) {
-                return Promise.resolve(str_juo.oma.error_cl.format({
-                    help_example: str_juo.oma.help_example
-                }));
-            } else if (!utils.isValidFloat(vol)) {
-                return Promise.resolve(str_juo.oma.error_vol.format({
-                    help_example: str_juo.oma.help_example
-                }));
-            }
+            const cl = drink.cl,
+                vol = drink.vol;
 
             const mg = constants.calcAlcoholMilligrams(vol / 100.0, cl / 100.0);
 
-            if (alcomath.isAlcoholAmountOutOfLimits(mg)) {
+            if (!isFinite(mg) || alcomath.isAlcoholAmountOutOfLimits(mg)) {
                 return Promise.resolve(str_juo.oma.error_exceeds);
             }
 
-            return user.drinkBoozeReturnEBAC(mg, `Oma juoma - ${cl}cl ${vol}%`)
+            return user.drinkBoozeReturnEBAC(mg, 'Oma juoma ' + utils.fiNumber(cl, cl % 1 ? 1 : 0) + ' cl ' + utils.fiNumber(vol, vol % 1 ? 1 : 0) + ' %')
                 .then((ebac) => {
                     const permilles = ebac.permilles;
                     const permilles30Min = ebac.permilles30Min;

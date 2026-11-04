@@ -68,6 +68,10 @@ class User {
     }
 
     _insertDrinkIfNotDuplicate(amount, description) {
+        amount = Math.round(Number(amount));
+        if (!isFinite(amount) || amount < 0) {
+            return Promise.reject(new Error('Invalid drink amount: ' + amount));
+        }
         // Insert only if the same drink wasn't just logged (see DUPLICATE_DRINK_SECONDS)
         return pool.query('insert into users_drinks (userId, alcohol, description) ' +
                 'select $1, $2, $3 where not exists (' +

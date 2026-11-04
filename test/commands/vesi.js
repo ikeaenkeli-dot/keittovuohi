@@ -159,4 +159,44 @@ describe('vesi.js & vedet.js', function() {
             })
             .catch((err) => done(err));
     });
+
+    it('Oma juoma should accept a decimal comma, e.g. 15cl 13,5%', function(done) {
+        const mocked = blakkistest.mockMsgAndBot();
+        const user = blakkistest.users[0];
+        mocked.msg.from.id = blakkistest.realIds[0];
+        const press = (button) => {
+            mocked.msg.data = '/start ' + button;
+            mocked.msg.addMessageObj();
+            return Commands.call('', mocked.msg, ['']);
+        };
+        Commands.call('/start', mocked.msg, ['/start'])
+            .then(() => press(strings.commands.start.juo.button_text))
+            .then(() => press(strings.commands.start.juo.oma.button_text))
+            .then(() => {
+                mocked.msg.data = undefined;
+                mocked.msg.message = undefined;
+                mocked.msg.text = '15cl 13,5%';
+                return Commands.call('15cl', mocked.msg, ['15cl', '13,5%']);
+            })
+            .then(() => user.getBooze())
+            .then((rows) => {
+                const drink = rows.find(x => x.description === 'Oma juoma 15 cl 13,5 %');
+                assert(drink, 'drink saved');
+                // 15 cl * 13,5 % * 0,789 g/ml ~ 16 g
+                assert(drink.alcohol > 15000 && drink.alcohol < 17000);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it('utils.parseDrinkInput should understand common ways to write a drink', function() {
+        const utils = require('../../app/lib/utils.js');
+        assert.deepEqual(utils.parseDrinkInput('15cl 13,5%'), { cl: 15, vol: 13.5 });
+        assert.deepEqual(utils.parseDrinkInput('15 cl 13.5 %'), { cl: 15, vol: 13.5 });
+        assert.deepEqual(utils.parseDrinkInput('0,5l 4,7%'), { cl: 50, vol: 4.7 });
+        assert.deepEqual(utils.parseDrinkInput('33 5,1'), { cl: 33, vol: 5.1 });
+        assert.equal(utils.parseDrinkInput('33cl'), null);
+        assert.equal(utils.parseDrinkInput('kalja'), null);
+        assert.equal(utils.parseDrinkInput('33cl 150%'), null);
+    });
 });

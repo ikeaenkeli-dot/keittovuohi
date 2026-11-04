@@ -257,6 +257,37 @@ utils.fiNumber = function(n, decimals) {
     return num.toFixed(decimals === undefined ? 1 : decimals).replace('.', ',');
 };
 
+/*
+    Parse a drink written by a user, e.g. "15cl 13,5%", "15 cl 13.5 %",
+    "33 5,1", "0,5l 4,7%", "4 cl 40%" or "2dl 12%".
+    Returns { cl, vol } in centiliters and percent, or null if the text
+    doesn't contain exactly an amount and a percentage.
+*/
+utils.parseDrinkInput = function(text) {
+    const t = String(text || '').toLowerCase().replace(/,/g, '.');
+    const re = /(\d+(?:\.\d+)?|\.\d+)\s*(ml|cl|dl|l|%)?/g;
+    const found = [];
+    let m;
+    while ((m = re.exec(t)) !== null) {
+        found.push({ value: parseFloat(m[1]), unit: m[2] || '' });
+    }
+    if (found.length !== 2) {
+        return null;
+    }
+    const toCl = { ml: 0.1, cl: 1, dl: 10, l: 100, '': 1 };
+    const amount = found[0];
+    const percent = found[1];
+    if (amount.unit === '%' || !(amount.unit in toCl)) {
+        return null;
+    }
+    const cl = amount.value * toCl[amount.unit];
+    const vol = percent.value;
+    if (!isFinite(cl) || !isFinite(vol) || cl <= 0 || vol <= 0 || vol > 100) {
+        return null;
+    }
+    return { cl: Math.round(cl * 100) / 100, vol: vol };
+};
+
 utils.roundTo = (n, t) => {
     t = t || 0;
     return Math.round(n * (Math.pow(10, t))) / Math.pow(10, t);
